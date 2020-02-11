@@ -208,6 +208,21 @@ function loop() {
   }
 }
   
+function ongoingTouchIndexById(idToFind) {
+  for (var i = 0; i < ongoingTouches.length; i++) {
+    var id = ongoingTouches[i].identifier;
+    
+    if (id == idToFind) {
+      return i;
+    }
+  }
+  return -1;    // not found
+}
+  
+function copyTouch({ identifier, pageX, pageY }) {
+  return { identifier, pageX, pageY };
+}
+  
 function handleStart(evt) {
   evt.preventDefault();
   var touches = evt.changedTouches;
