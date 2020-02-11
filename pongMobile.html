@@ -45,6 +45,8 @@ canvas {
 <div class="container">
   <canvas id="c" width="640" height="480" style="background:#000"></canvas>
 </div>
+<br>
+Log: <pre id="log" style="border: 1px solid #ccc;"></pre>
 <script>
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
@@ -208,6 +210,11 @@ function loop() {
   }
 }
   
+function log(msg) {
+  var p = document.getElementById('log');
+  p.innerHTML = msg + "\n" + p.innerHTML;
+}
+  
 function ongoingTouchIndexById(idToFind) {
   for (var i = 0; i < ongoingTouches.length; i++) {
     var id = ongoingTouches[i].identifier;
@@ -225,6 +232,7 @@ function copyTouch({ identifier, pageX, pageY }) {
   
 function handleStart(evt) {
   evt.preventDefault();
+  console.log("touchstart.");
   var touches = evt.changedTouches;
         
   for (var i = 0; i < touches.length; i++) {
@@ -269,6 +277,8 @@ function handleEnd(evt) {
     }
   }
 }
+  
+  
 
 // listen to touch events to move the paddles
   //sauce: https://developer.mozilla.org/en-US/docs/Web/API/Touch_events
