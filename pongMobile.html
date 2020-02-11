@@ -57,6 +57,8 @@ var ballSpeed = 5;
   
 var scorePlayer1 = 0;
 var scorePlayer2 = 0;
+  
+var ongoingTouches = [];
 
 const leftPaddle = {
   // start in the middle of the game on the left side
@@ -205,39 +207,59 @@ function loop() {
     context.fillRect(canvas.width / 2 - grid / 2, i, grid, grid);
   }
 }
+  
+function handleStart(evt) {
+  evt.preventDefault();
+  var touches = evt.changedTouches;
+        
+  for (var i = 0; i < touches.length; i++) {
+    ongoingTouches.push(copyTouch(touches[i]));
+    
+    //left paddle
+    if ( touches[i].pageX < 320 ) {
+      if ( touches[i].pageY < 240 ) {
+        leftPaddle.dy = -paddleSpeed;
+      }
+      if ( touches[i].pageY > 240 ) {
+        leftPaddle.dy = paddleSpeed;
+      } 
+    }
+    //right paddle
+    else if ( touches[i].pageX > 320 ) {
+      if ( touches[i].pageY < 240 ) {
+        rightPaddle.dy = -paddleSpeed;
+      }
+      if ( touches[i].pageY > 240 ) {
+        rightPaddle.dy = paddleSpeed;
+      } 
+    }
+  }
+}
+  
+function handleEnd(evt) {
+  evt.preventDefault();
+  var touches = evt.changedTouches;
 
-// listen to keyboard events to move the paddles
-document.addEventListener('keydown', function(e) {
+  for (var i = 0; i < touches.length; i++) {
+   var idx = ongoingTouchIndexById(touches[i].identifier);
 
-  // up arrow key
-  if (e.which === 37) {
-    rightPaddle.dy = -paddleSpeed;
+    if (idx >= 0) {
+      if ( touches[i].pageX < 320 ) {
+        leftPaddle.dy = 0;
+      }
+      else if ( touches[i].pageX > 320 ) {
+        rightPaddle.dy = 0;
+      }
+      ongoingTouches.splice(idx, 1);  // remove it; we're done
+    }
   }
-  // down arrow key
-  else if (e.which === 40) {
-    rightPaddle.dy = paddleSpeed;
-  }
+}
 
-  // w key
-  if (e.which === 87) {
-    leftPaddle.dy = -paddleSpeed;
-  }
-  // a key
-  else if (e.which === 83) {
-    leftPaddle.dy = paddleSpeed;
-  }
-});
-
-// listen to keyboard events to stop the paddle if key is released
-document.addEventListener('keyup', function(e) {
-  if (e.which === 37 || e.which === 40) {
-    rightPaddle.dy = 0;
-  }
-
-  if (e.which === 83 || e.which === 87) {
-    leftPaddle.dy = 0;
-  }
-});
+// listen to touch events to move the paddles
+  //sauce: https://developer.mozilla.org/en-US/docs/Web/API/Touch_events
+  canvas.addEventListener("touchstart", handleStart, false);
+  canvas.addEventListener("touchend", handleEnd, false);
+  canvas.addEventListener("touchcancel", handleCancel, false);
 
 // start the game
 requestAnimationFrame(loop);
