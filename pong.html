@@ -20,7 +20,6 @@
   </style>
 </head>
 <body>
-<p>yoooooooooo</p>
 <canvas width="750" height="585" id="game"></canvas>
 <script>
 const canvas = document.getElementById('game');
@@ -180,8 +179,8 @@ function loop() {
   //Draw scores
   context.fillStyle = "#20f";
   context.font = "20px Verdana";
-  context.fillText("Player1 : "+scorePlayer1,10,canvas.height-20);
-  context.fillText("Player2 : "+scorePlayer2,10,20);
+  context.fillText("Player1 : "+scorePlayer1,canvas.width/2,canvas.height/2);
+  context.fillText("Player2 : "+scorePlayer2,canvas.width/2,canvas.height/2);
 }
 
 // listen to keyboard events to move the paddles
