@@ -84,10 +84,10 @@ function loop() {
   context.clearRect(0,0,canvas.width,canvas.height);
   
   //Draw scores
-  context.fillStyle = "#20f";
+  context.fillStyle = "#fff";
   context.font = "20px Verdana";
-  context.fillText("Player1 : "+scorePlayer1,canvas.width/2,canvas.height/2);
-  context.fillText("Player2 : "+scorePlayer2,canvas.width/2,canvas.height/2);
+  context.fillText("Player1 : "+scorePlayer1,10,25);
+  context.fillText("Player2 : "+scorePlayer2,10+ canvas.width/2,25);
 
   // move paddles by their velocity
   leftPaddle.y += leftPaddle.dy;
