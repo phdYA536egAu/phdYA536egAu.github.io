@@ -84,8 +84,7 @@ function loop() {
   context.clearRect(0,0,canvas.width,canvas.height);
   
   //Draw scores
-  context.fillStyle = "#fff";
-  context.font = "20px Verdana";
+  context.fillStyle = 'white';
   context.fillText("Player1 : "+scorePlayer1,10,25);
   context.fillText("Player2 : "+scorePlayer2,10+ canvas.width/2,25);
 
@@ -187,7 +186,7 @@ function loop() {
 document.addEventListener('keydown', function(e) {
 
   // up arrow key
-  if (e.which === 38) {
+  if (e.which === 37) {
     rightPaddle.dy = -paddleSpeed;
   }
   // down arrow key
@@ -207,7 +206,7 @@ document.addEventListener('keydown', function(e) {
 
 // listen to keyboard events to stop the paddle if key is released
 document.addEventListener('keyup', function(e) {
-  if (e.which === 38 || e.which === 40) {
+  if (e.which === 37 || e.which === 40) {
     rightPaddle.dy = 0;
   }
 
