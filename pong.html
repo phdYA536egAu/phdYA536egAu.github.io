@@ -82,6 +82,12 @@ function collides(obj1, obj2) {
 function loop() {
   requestAnimationFrame(loop);
   context.clearRect(0,0,canvas.width,canvas.height);
+  
+  //Draw scores
+  context.fillStyle = "#20f";
+  context.font = "20px Verdana";
+  context.fillText("Player1 : "+scorePlayer1,canvas.width/2,canvas.height/2);
+  context.fillText("Player2 : "+scorePlayer2,canvas.width/2,canvas.height/2);
 
   // move paddles by their velocity
   leftPaddle.y += leftPaddle.dy;
@@ -175,12 +181,6 @@ function loop() {
   for (let i = grid; i < canvas.height - grid; i += grid * 2) {
     context.fillRect(canvas.width / 2 - grid / 2, i, grid, grid);
   }
-  
-  //Draw scores
-  context.fillStyle = "#20f";
-  context.font = "20px Verdana";
-  context.fillText("Player1 : "+scorePlayer1,canvas.width/2,canvas.height/2);
-  context.fillText("Player2 : "+scorePlayer2,canvas.width/2,canvas.height/2);
 }
 
 // listen to keyboard events to move the paddles
