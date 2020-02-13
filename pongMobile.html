@@ -43,7 +43,7 @@ canvas {
 <body>
 
 <div class="container">
-  <canvas id="c" width="640" height="480" style="background:#000"></canvas>
+  <canvas id="game" width="640" height="480" style="background:#000"></canvas>
 </div>
 <br>
 Log: <pre id="log" style="border: 1px solid #ccc;"></pre>
@@ -285,7 +285,7 @@ function handleEnd(evt) {
   //sauce: https://developer.mozilla.org/en-US/docs/Web/API/Touch_events
   canvas.addEventListener("touchstart", handleStart, false);
   canvas.addEventListener("touchend", handleEnd, false);
-  canvas.addEventListener("touchcancel", handleCancel, false);
+  //canvas.addEventListener("touchcancel", handleCancel, false);
 
 // start the game
 requestAnimationFrame(loop);
