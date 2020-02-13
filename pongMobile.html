@@ -41,9 +41,9 @@ canvas {
   </style>
 </head>
 <body>
-
-<div class="container">
-  <canvas id="game" width="640" height="480" style="background:#000"></canvas>
+<div id="container" class="container">
+  <canvas id="game" width="640" height="480" ></canvas>
+        
 </div>
 <br>
 Log: <pre id="log" style="border: 1px solid #ccc;"></pre>
@@ -62,6 +62,10 @@ var scorePlayer2 = 0;
   
 //var ongoingTouches = [];
 var ongoingTouches = new Array;
+
+var canvasMidHeight = canvas.height / 2;
+console.log(canvasMidHeight)
+
 
 const leftPaddle = {
   // start in the middle of the game on the left side
@@ -97,6 +101,15 @@ const ball = {
   dx: ballSpeed,
   dy: -ballSpeed
 };
+
+//https://stackoverflow.com/questions/17130395/real-mouse-position-in-canvas
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.clientX - rect.left,
+      y: evt.clientY - rect.top
+    };
+}
 
 // check for collision between two objects using axis-aligned bounding box (AABB)
 // @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
@@ -235,26 +248,33 @@ function handleStart(evt) {
   evt.preventDefault();
   console.log("touchstart.");
   var touches = evt.changedTouches;
+        var rect = canvas.getBoundingClientRect();
+
+<!-- x, y = getMousePos(canvas, ) -->
         
   for (var i = 0; i < touches.length; i++) {
     ongoingTouches.push(copyTouch(touches[i]));
     
+        console.log("touches " + touches[i].pageY)
     //left paddle
-    if ( touches[i].pageX < 320 ) {
-      if ( touches[i].pageY < 240 ) {
+    if ( touches[i].pageX -rect.left< 320 ) {
+      if ( touches[i].pageY - rect.top < 240 ) {
         leftPaddle.dy = -paddleSpeed;
       }
-      if ( touches[i].pageY > 240 ) {
+      if ( touches[i].pageY -rect.top> 240 ) {
         leftPaddle.dy = paddleSpeed;
       } 
     }
     //right paddle
-    else if ( touches[i].pageX > 320 ) {
-      if ( touches[i].pageY < 240 ) {
+    else if ( touches[i].pageX -rect.left> 320 ) {
+      if ( touches[i].pageY -rect.top< canvasMidHeight ) {
         rightPaddle.dy = -paddleSpeed;
+        console.log(touches[i].pageY)
+
       }
-      if ( touches[i].pageY > 240 ) {
+      if ( touches[i].pageY -rect.top> canvasMidHeight) {
         rightPaddle.dy = paddleSpeed;
+        console.log(touches[i].pageY)
       } 
     }
   }
@@ -285,10 +305,11 @@ function handleEnd(evt) {
   //sauce: https://developer.mozilla.org/en-US/docs/Web/API/Touch_events
   canvas.addEventListener("touchstart", handleStart, false);
   canvas.addEventListener("touchend", handleEnd, false);
-  //canvas.addEventListener("touchcancel", handleCancel, false);
+  <!-- canvas.addEventListener("touchcancel", handleCancel, false); -->
 
 // start the game
 requestAnimationFrame(loop);
 </script>
   </body>
  </html>
+
