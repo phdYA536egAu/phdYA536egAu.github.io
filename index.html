@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Copia e cola uma ou varias linhas do teu historico de pontos</p>
+
+<input type="text" id="myText" maxlenght="10000" value="Some text...">
+
+<button onclick="myFunction()">Calcular custo dos PP's comprados</button>
+
+<p>Input:</p>
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+  var input = document.getElementById("myText").value;
+  var str = "";
+  
+  var recursos=0;
+  var pontos=0;
+  
+  var this_pontos;
+  var this_recursos;
+  
+  for (i = 0; i < input.length; i++) {
+    str = str.concat(input.substr(i, 1));
+  }
+  document.getElementById("demo").innerHTML = str;
+}
+</script>
+
+</body>
