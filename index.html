@@ -2,50 +2,122 @@
 <html>
 <body>
 
-<p>Copia e cola uma ou varias linhas do teu historico de pontos</p>
+<p>1.Insere o numero de pps que queres gastar</p>
+<input type="text" id="pps_a_gastar" maxlenght="100" value="pp's a gastar">
+
+<p>2.Insere o as unidades por hora geradas em 'Aumento da produção de recursos de 20%' (para encontrar carrega em 'Bosque') </p>
+<input type="text" id="unidades_hora" maxlenght="100" value="unidades/hora">
+
+<script>
+function calcula_unidades_semana(){
+	var un_h=document.getElementById("unidades_hora").value;
+	var x7_x24=parseInt(un_h)*7*24;
+    
+	document.getElementById("_x7_x24").innerHTML = x7_x24;
+}
+
+function calcula_unidades_mes(){
+	var un_h=document.getElementById("unidades_hora").value;
+	var x30_x24=parseInt(un_h)*30*24;
+    
+	document.getElementById("_x30_x24").innerHTML = x30_x24;
+}
+</script>
+
+<p>3.Ao fim de uma semana, com o aumento de 20%, produzes mais</p>
+<p id="_x7_x24"></p><p> unidades</p>
+<button onclick="calcula_unidades_semana()">Calcular unidades geradas numa semana</button>
+
+<p>3.Ao fim de um mes, com o aumento de 20%, produzes mais</p>
+<p id="_x30_x24"></p><p> unidades</p>
+<button onclick="calcula_unidades_mes()">Calcular unidades geradas num mes</button>
+
+<p>---------------------------------------------------------------</p>
+<p>Copia e cola TODAS as linhas do teu historico de pontos</p>
 
 <input type="text" id="myText" maxlenght="10000" value="Some text...">
 
 <button onclick="mainFunction()">Calcular custo dos PP's comprados</button>
 
 <p>Input:</p>
-<p id="demo"></p>
+<p id="input"></p>
+<p>Total pp's comprados:</p>
+<p id="total_pps"></p>
+<p>Total pp's usados:</p>
+<p id="total_pps_usados"></p>
 
 <script>
 var lines = [];
 var linesLength;
-    
+
 var text, i, bool;
 var line="";
 var line_counter=0;
 
+var total_pps_comprados=0;
+var total_pps_usados=0;
+
 function displayLines(){
   linesLength = lines.length;
-  
+
   text = "<ul>";
   for (i = 0; i < linesLength; i++) {
        text += "<li>" + lines[i] + "</li>";
   }
   text += "</ul>";
-  
-  document.getElementById("demo").innerHTML = text;
+
+  document.getElementById("input").innerHTML = text;
 
 }
 
 function obterLinhas(){
-	var input = document.getElementById("myText").value;
-    
+    var input = document.getElementById("myText").value;
+
     for (i = 0; i < input.length; i++) {
-  		bool=input.substr(i, 1).localeCompare(")");
-  		if ( bool ){
-    		line = line.concat(input.substr(i, 1));
-    	}
-    	else{
-    		lines[line_counter]=line;
-        	line_counter+=1;
-        	line="";
-    	}
-	}
+        bool=input.substr(i, 1).localeCompare(")");
+        if ( bool ){
+            line = line.concat(input.substr(i, 1));
+        }
+        else{
+        	var pos_transf = line.indexOf("Transferir");
+
+    		if (pos_transf != -1 ){
+            	total_pps_comprados+=obter_pps_comprados();
+            }
+            var pos_ut = line.indexOf("Utilizados");
+
+    		if (pos_ut != -1 ){
+            	total_pps_usados+=obter_pps_usados();
+            }
+            lines[line_counter]=line;
+            line_counter+=1;
+            line="";
+        }
+    }
+}
+
+function obter_pps_comprados(){
+    var pos_transf = line.indexOf("Transferir");
+
+    if (pos_transf != -1 ){
+        var line_sem_principio = line.slice(pos_transf+10);
+        var primeiro_espaco = line_sem_principio.lastIndexOf(" ");
+        var pps_comprados = line_sem_principio.slice(0, line_sem_principio.length-primeiro_espaco+1);
+
+        return parseInt(pps_comprados);  
+    }
+}
+
+function obter_pps_usados(){
+    var pos_ut = line.indexOf("Utilizados");
+
+    if (pos_ut != -1 ){
+        var line_sem_principio = line.slice(pos_ut+10);
+        var primeiro_espaco = line_sem_principio.lastIndexOf(" ");
+        var pps_us = line_sem_principio.slice(0, line_sem_principio.length-primeiro_espaco+1); //nao deveria funcionar quando os novos pontos premium nao tem 3 digitos
+
+        return parseInt(pps_us); 
+    } 
 }
 
 function mainFunction() {
@@ -53,7 +125,11 @@ function mainFunction() {
   obterLinhas();
 
   displayLines();
-  
+
+  document.getElementById("total_pps").innerHTML = total_pps_comprados;
+  document.getElementById("total_usados").innerHTML = total_pps_usados;
+
+
 }
 </script>
 
