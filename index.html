@@ -14,18 +14,37 @@
 <script>
 function myFunction() {
   var input = document.getElementById("myText").value;
-  var str = "";
   
-  var recursos=0;
-  var pontos=0;
+  var lines = [];
+  var text, i, bool;
+  var linesLength;
   
-  var this_pontos;
-  var this_recursos;
+  var line="";
+  var line_counter=0;
   
   for (i = 0; i < input.length; i++) {
-    str = str.concat(input.substr(i, 1));
+  	bool=input.substr(i, 1).localeCompare(")");
+  	if ( bool==1 ){
+    	line = line.concat(input.substr(i, 1));
+    }
+    else{
+    	lines[line_counter]=line;
+        line_counter+=1;
+        line="";
+    }
+    
   }
-  document.getElementById("demo").innerHTML = str;
+  
+  linesLength = lines.length;
+  
+  text = "<ul>";
+  for (i = 0; i < linesLength; i++) {
+       text += "<li>" + lines[i] + "</li>";
+  }
+  text += "</ul>";
+  
+  document.getElementById("demo").innerHTML = text;
+  
 }
 </script>
 
