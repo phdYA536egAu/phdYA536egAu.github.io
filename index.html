@@ -114,7 +114,7 @@ function obter_pps_usados(){
     if (pos_ut != -1 ){
         var line_sem_principio = line.slice(pos_ut+10);
         var primeiro_espaco = line_sem_principio.lastIndexOf(" ");
-        var pps_us = line_sem_principio.slice(0, line_sem_principio.length-primeiro_espaco+1); //nao deveria funcionar quando os novos pontos premium nao tem 3 digitos
+        var pps_us = line_sem_principio.slice(0, line_sem_principio.length-primeiro_espaco+5); //nao deveria funcionar quando os novos pontos premium nao tem 3 digitos
 
         return parseInt(pps_us); 
     } 
@@ -127,7 +127,7 @@ function mainFunction() {
   displayLines();
 
   document.getElementById("total_pps").innerHTML = total_pps_comprados;
-  document.getElementById("total_usados").innerHTML = total_pps_usados;
+  document.getElementById("total_pps_usados").innerHTML = total_pps_usados;
 
 
 }
