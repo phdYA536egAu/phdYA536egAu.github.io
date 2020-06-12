@@ -45,6 +45,12 @@ function calcula_unidades_mes(){
 <p id="total_pps"></p>
 <p>Total pp's usados:</p>
 <p id="total_pps_usados"></p>
+<p>Total gasto em madeira:</p>
+<p id="total_madeira"></p>
+<p>Total gasto em argila:</p>
+<p id="total_argila"></p>
+<p>Total gasto em ferro:</p>
+<p id="total_ferro"></p>
 
 <script>
 var lines = [];
@@ -56,6 +62,13 @@ var line_counter=0;
 
 var total_pps_comprados=0;
 var total_pps_usados=0;
+
+var total_gasto_em_madeira=0;
+var total_gasto_em_argila=0;
+var total_gasto_em_ferro=0;
+
+var precos_madeira=[['Dia', 'Preço em madeira de um PP'],];
+var madeira_cont=1;
 
 function displayLines(){
   linesLength = lines.length;
@@ -96,12 +109,36 @@ function obterLinhas(){
     }
 }
 
+function obter_qtd_de_recurso_gasto(linha_sem_principio, prim_esp){
+	var qtd="";
+	if ( linha_sem_principio.search("Madeira") != -1 ){
+    	//Obter qtd de madeira gasta a comprar os pps
+        qtd=linha_sem_principio.slice(linha_sem_principio.indexOf("(")+1, linha_sem_principio.length);
+        total_gasto_em_madeira += parseInt(qtd);
+    }
+    
+    if ( linha_sem_principio.search("Argila") != -1 ){
+    	//Obter qtd de argila gasta a comprar os pps
+        qtd=linha_sem_principio.slice(linha_sem_principio.indexOf("(")+1, linha_sem_principio.length);
+        total_gasto_em_argila += parseInt(qtd);        
+    }
+
+	if ( linha_sem_principio.search("Ferro") != -1 ){
+    	//Obter qtd de ferro gasto a comprar os pps
+        qtd=linha_sem_principio.slice(linha_sem_principio.indexOf("(")+1, linha_sem_principio.length);
+        total_gasto_em_ferro += parseInt(qtd);       
+    }
+}
+
 function obter_pps_comprados(){
     var pos_transf = line.indexOf("Transferir");
 
     if (pos_transf != -1 ){
         var line_sem_principio = line.slice(pos_transf+10);
         var primeiro_espaco = line_sem_principio.lastIndexOf(" ");
+       
+        obter_qtd_de_recurso_gasto(line_sem_principio, primeiro_espaco);
+               
         var pps_comprados = line_sem_principio.slice(0, line_sem_principio.length-primeiro_espaco+1);
 
         return parseInt(pps_comprados);  
@@ -129,9 +166,12 @@ function mainFunction() {
   document.getElementById("total_pps").innerHTML = total_pps_comprados;
   document.getElementById("total_pps_usados").innerHTML = total_pps_usados;
 
-
+  document.getElementById("total_madeira").innerHTML = total_gasto_em_madeira;   
+  document.getElementById("total_argila").innerHTML = total_gasto_em_argila;
+  document.getElementById("total_ferro").innerHTML = total_gasto_em_ferro;
 }
 </script>
+
 
 </body>
 </html>
