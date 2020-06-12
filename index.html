@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html>
+
+<head>
+	<script type = "text/javascript" src = "https://www.gstatic.com/charts			/loader.js">
+	</script>
+	<script type = "text/javascript">
+		google.charts.load('current', {packages: ['corechart','line']});  
+	</script>     
+</head>
+
 <body>
 
 <p>1.Insere o numero de pps que queres gastar</p>
@@ -48,15 +57,16 @@ function calcula_unidades_mes(){
 <p>Total pp's usados:</p>
 <p id="total_pps_usados"></p>
 <p>Total gasto em madeira:</p>
-<p id="total_madeira"></p>
-<p>Total gasto em argila:</p>
-<p id="total_argila"></p>
+<p style="color:brown;" id="total_madeira"></p>
+<p >Total gasto em argila:</p>
+<p style="color:orange;" id="total_argila"></p>
 <p>Total gasto em ferro:</p>
-<p id="total_ferro"></p>
+<p style="color:darkgrey;" id="total_ferro"></p>
 <p>Precos pp:</p>
 <p id="pp"></p>
 
-<div id="curve_chart" style="width: 900px; height: 500px"></div>
+<div id = "container" style = "width: 550px; height: 400px; margin: 0 auto">
+</div>
 
 <script>
 var lines = [];
@@ -220,7 +230,7 @@ function obter_pps_comprados(){
                
         var pps_comprados = line_sem_principio.slice(0, line_sem_principio.length-primeiro_espaco+1);
         
-        precos_madeira[madeira_cont]=[data, valor, qtd/parseInt(pps_comprados)];
+        precos_madeira[madeira_cont]=[data, parseInt(qtd)/parseInt(pps_comprados), 1, 1, 1];
         madeira_cont+=1;
 
         return parseInt(pps_comprados);  
@@ -255,13 +265,43 @@ function mainFunction() {
   text = "<ul>";
   
   for (i = 0; i < precos_madeira.length; i++) {
-  	text += "<li>" + precos_madeira[i][0] + ":" + precos_madeira[i][1] + " " + precos_madeira[i][2] + "</li>";
+  	text += '<li>' + precos_madeira[i][0] + ":::" + precos_madeira[i][1] + "--" + precos_madeira[i][2] + "--" + precos_madeira[i][3] + "--" + precos_madeira[i][4]+"</li>";
   }
   
   text += "</ul>";
   
   document.getElementById("pp").innerHTML = text;
 }
+
+//------CHARTS---------//
+function drawChart() {
+            // Define the chart to be drawn.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Month');
+            data.addColumn('number', 'Madeira');
+            data.addColumn('number', 'Argila');
+            data.addColumn('number', 'Ferro');
+            data.addColumn('number', 'PPs na conta');
+            data.addRows(precos_madeira);
+               
+            // Set chart options
+            var options = {'title' : 'Average Temperatures of Cities',
+               hAxis: {
+                  title: 'Month'
+               },
+               vAxis: {
+                  title: 'Temperature'
+               },   
+               'width':550,
+               'height':400,
+               pointsVisible: true	  
+            };
+
+            // Instantiate and draw the chart.
+            var chart = new google.visualization.LineChart(document.getElementById('container'));
+            chart.draw(data, options);
+         }
+         google.charts.setOnLoadCallback(drawChart);
 </script>
 
 
