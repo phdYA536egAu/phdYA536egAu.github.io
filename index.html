@@ -39,6 +39,8 @@ function calcula_unidades_mes(){
 
 <button onclick="mainFunction()">Calcular custo dos PP's comprados</button>
 
+<p>Teste:</p>
+<p id="teste"></p>
 <p>Input:</p>
 <p id="input"></p>
 <p>Total pp's comprados:</p>
@@ -53,6 +55,8 @@ function calcula_unidades_mes(){
 <p id="total_ferro"></p>
 <p>Precos pp:</p>
 <p id="pp"></p>
+
+<div id="curve_chart" style="width: 900px; height: 500px"></div>
 
 <script>
 var lines = [];
@@ -136,13 +140,78 @@ function obter_qtd_de_recurso_gasto(linha_sem_principio, prim_esp){
     return parseInt(qtd);
 }
 
+function obter_valor_da_data(data_str){
+	var mes_str;
+    var mes_num;
+    var dia_str;
+    var hora_str;
+    var min_str;
+    
+	//Obter mes
+    mes_str = data_str.slice(0, data_str.indexOf(" "));
+    
+    //Transformar mes(string) num numero
+    switch(mes_str){
+    	case "jan":
+        	mes_num=1;
+            break;
+        case "fev":
+        	mes_num=2;
+            break;
+        case "mar":
+        	mes_num=3;
+            break;
+        case "abr":
+        	mes_num=4;
+            break;
+        case "mai":
+        	mes_num=5;
+            break;
+        case "jun":
+        	mes_num=6;
+            break;
+        case "jul":
+        	mes_num=7;
+            break;
+        case "ago":
+        	mes_num=8;
+            break;
+        case "set":
+        	mes_num=9;
+            break;
+        case "out":
+        	mes_num=10;
+            break;
+        case "nov":
+        	mes_num=11;
+            break;
+        case "dez":
+        	mes_num=12;
+    }
+    
+	//Obter dia
+    dia_str=data_str.slice(data_str.indexOf(" "), data_str.indexOf(","));
+ 
+    //Obter hora
+    hora_str=data_str.slice(data_str.indexOf(",")+1, data_str.indexOf(":"));
+    
+    //Obter min
+    min_str=data_str.slice(data_str.indexOf(":")+1, data_str.indexOf("M"));
+    
+    return mes_num*12/(31*24*60)+parseInt(dia_str)*31/(24*60)+(parseInt(hora_str)+1)*24/60+(parseInt(min_str)+1)*60;
+    
+}
+
 function obter_pps_comprados(){
     var pos_transf = line.indexOf("Transferir");
     var qtd;
     var data;
+    var valor;
 
     if (pos_transf != -1 ){
     	data = line.slice(0, line.indexOf("M"));
+        
+        valor = obter_valor_da_data(data);
     
         var line_sem_principio = line.slice(pos_transf+10);
         var primeiro_espaco = line_sem_principio.lastIndexOf(" ");
@@ -151,7 +220,7 @@ function obter_pps_comprados(){
                
         var pps_comprados = line_sem_principio.slice(0, line_sem_principio.length-primeiro_espaco+1);
         
-        precos_madeira[madeira_cont]=[data, qtd/parseInt(pps_comprados)];
+        precos_madeira[madeira_cont]=[data, valor, qtd/parseInt(pps_comprados)];
         madeira_cont+=1;
 
         return parseInt(pps_comprados);  
@@ -186,7 +255,7 @@ function mainFunction() {
   text = "<ul>";
   
   for (i = 0; i < precos_madeira.length; i++) {
-  	text += "<li>" + precos_madeira[i][0] + ":" + precos_madeira[i][1] + "</li>";
+  	text += "<li>" + precos_madeira[i][0] + ":" + precos_madeira[i][1] + " " + precos_madeira[i][2] + "</li>";
   }
   
   text += "</ul>";
