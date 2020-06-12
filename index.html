@@ -51,6 +51,8 @@ function calcula_unidades_mes(){
 <p id="total_argila"></p>
 <p>Total gasto em ferro:</p>
 <p id="total_ferro"></p>
+<p>Precos pp:</p>
+<p id="pp"></p>
 
 <script>
 var lines = [];
@@ -67,8 +69,8 @@ var total_gasto_em_madeira=0;
 var total_gasto_em_argila=0;
 var total_gasto_em_ferro=0;
 
-var precos_madeira=[['Dia', 'Preço em madeira de um PP'],];
-var madeira_cont=1;
+var precos_madeira=[];
+var madeira_cont=0;
 
 function displayLines(){
   linesLength = lines.length;
@@ -109,6 +111,8 @@ function obterLinhas(){
     }
 }
 
+
+
 function obter_qtd_de_recurso_gasto(linha_sem_principio, prim_esp){
 	var qtd="";
 	if ( linha_sem_principio.search("Madeira") != -1 ){
@@ -128,18 +132,27 @@ function obter_qtd_de_recurso_gasto(linha_sem_principio, prim_esp){
         qtd=linha_sem_principio.slice(linha_sem_principio.indexOf("(")+1, linha_sem_principio.length);
         total_gasto_em_ferro += parseInt(qtd);       
     }
+    
+    return parseInt(qtd);
 }
 
 function obter_pps_comprados(){
     var pos_transf = line.indexOf("Transferir");
+    var qtd;
+    var data;
 
     if (pos_transf != -1 ){
+    	data = line.slice(0, line.indexOf("M"));
+    
         var line_sem_principio = line.slice(pos_transf+10);
         var primeiro_espaco = line_sem_principio.lastIndexOf(" ");
        
-        obter_qtd_de_recurso_gasto(line_sem_principio, primeiro_espaco);
+        qtd = obter_qtd_de_recurso_gasto(line_sem_principio, primeiro_espaco);
                
         var pps_comprados = line_sem_principio.slice(0, line_sem_principio.length-primeiro_espaco+1);
+        
+        precos_madeira[madeira_cont]=[data, qtd/parseInt(pps_comprados)];
+        madeira_cont+=1;
 
         return parseInt(pps_comprados);  
     }
@@ -158,7 +171,7 @@ function obter_pps_usados(){
 }
 
 function mainFunction() {
-
+  var text;
   obterLinhas();
 
   displayLines();
@@ -169,6 +182,16 @@ function mainFunction() {
   document.getElementById("total_madeira").innerHTML = total_gasto_em_madeira;   
   document.getElementById("total_argila").innerHTML = total_gasto_em_argila;
   document.getElementById("total_ferro").innerHTML = total_gasto_em_ferro;
+  
+  text = "<ul>";
+  
+  for (i = 0; i < precos_madeira.length; i++) {
+  	text += "<li>" + precos_madeira[i][0] + ":" + precos_madeira[i][1] + "</li>";
+  }
+  
+  text += "</ul>";
+  
+  document.getElementById("pp").innerHTML = text;
 }
 </script>
 
