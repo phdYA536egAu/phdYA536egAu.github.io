@@ -171,25 +171,29 @@ function obterLinhas(){
 
 function obter_qtd_de_recurso_gasto(linha_sem_principio, prim_esp){
 	var qtd="";
+    var tipo_de_recurso;
 	if ( linha_sem_principio.search("Madeira") != -1 ){
     	//Obter qtd de madeira gasta a comprar os pps
         qtd=linha_sem_principio.slice(linha_sem_principio.indexOf("(")+1, linha_sem_principio.length);
         total_gasto_em_madeira += parseInt(qtd);
+        tipo_de_recurso=1;
     }
     
     if ( linha_sem_principio.search("Argila") != -1 ){
     	//Obter qtd de argila gasta a comprar os pps
         qtd=linha_sem_principio.slice(linha_sem_principio.indexOf("(")+1, linha_sem_principio.length);
-        total_gasto_em_argila += parseInt(qtd);        
+        total_gasto_em_argila += parseInt(qtd);
+        tipo_de_recurso=2;
     }
 
 	if ( linha_sem_principio.search("Ferro") != -1 ){
     	//Obter qtd de ferro gasto a comprar os pps
         qtd=linha_sem_principio.slice(linha_sem_principio.indexOf("(")+1, linha_sem_principio.length);
-        total_gasto_em_ferro += parseInt(qtd);       
+        total_gasto_em_ferro += parseInt(qtd);
+        tipo_de_recurso=3;
     }
     
-    return parseInt(qtd);
+    return [parseInt(qtd), tipo_de_recurso];
 }
 
 function obter_valor_da_data(data_str){
@@ -256,7 +260,7 @@ function obter_valor_da_data(data_str){
 
 function obter_pps_comprados(){
     var pos_transf = line.indexOf("Transferir");
-    var qtd;
+    var qtd_e_tiporecurso;
     var data;
     var valor;
 
@@ -268,11 +272,20 @@ function obter_pps_comprados(){
         var line_sem_principio = line.slice(pos_transf+10);
         var primeiro_espaco = line_sem_principio.lastIndexOf(" ");
        
-        qtd = obter_qtd_de_recurso_gasto(line_sem_principio, primeiro_espaco);
+        qtd_e_tiporecurso = obter_qtd_de_recurso_gasto(line_sem_principio, primeiro_espaco);
                
         var pps_comprados = line_sem_principio.slice(0, line_sem_principio.length-primeiro_espaco+1);
         
-        precos_madeira[madeira_cont]=[data, parseInt(qtd)/parseInt(pps_comprados), 1, 1, 1];
+        switch (qtd_e_tiporecurso[1]){
+        	case 1:
+            	precos_madeira[madeira_cont]=[data, parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados),  , ,1 ];
+        		break;
+            case 2:
+            	precos_madeira[madeira_cont]=[data, , parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados), ,1];
+        		break;
+            case 3:
+            	precos_madeira[madeira_cont]=[data, ,  ,parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados),1];
+        }
         madeira_cont+=1;
 
         return parseInt(pps_comprados);  
@@ -321,7 +334,7 @@ function mainFunction() {
 function drawChart() {
             // Define the chart to be drawn.
             var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Month');
+            data.addColumn('string', 'String');
             data.addColumn('number', 'Madeira');
             data.addColumn('number', 'Argila');
             data.addColumn('number', 'Ferro');
@@ -329,12 +342,12 @@ function drawChart() {
             data.addRows(precos_madeira);
                
             // Set chart options
-            var options = {'title' : 'Average Temperatures of Cities',
+            var options = {'title' : 'Quanto custa comprar 1PP:',
                hAxis: {
-                  title: 'Month'
+                  title: 'Data'
                },
                vAxis: {
-                  title: 'Temperature'
+                  title: 'Recurso'
                },   
                'width':550,
                'height':400,
