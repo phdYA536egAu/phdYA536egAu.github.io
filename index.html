@@ -203,7 +203,7 @@ function obter_valor_da_data(data_str){
     var min_str;
     
 	//Obter mes
-    mes_str = data_str.slice(0, data_str.indexOf(" "));
+    mes_str = data_str.slice(2, 5);
     
     //Transformar mes(string) num numero
     switch(mes_str){
@@ -245,7 +245,7 @@ function obter_valor_da_data(data_str){
     }
     
 	//Obter dia
-    dia_str=data_str.slice(data_str.indexOf(" "), data_str.indexOf(","));
+    dia_str=data_str.slice(data_str.indexOf(",")-3, data_str.indexOf(","));
  
     //Obter hora
     hora_str=data_str.slice(data_str.indexOf(",")+1, data_str.indexOf(":"));
@@ -253,7 +253,7 @@ function obter_valor_da_data(data_str){
     //Obter min
     min_str=data_str.slice(data_str.indexOf(":")+1, data_str.indexOf("M"));
     
-    return mes_num*12/(31*24*60)+parseInt(dia_str)*31/(24*60)+(parseInt(hora_str)+1)*24/60+(parseInt(min_str)+1)*60;
+    return mes_num*(31*24*60)+parseInt(dia_str)*(24*60)+(parseInt(hora_str)+1)*60+(parseInt(min_str)+1);
     
 }
 
