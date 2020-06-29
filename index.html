@@ -265,7 +265,6 @@ function obter_pps_comprados(){
 
     if (pos_transf != -1 ){
     	data = line.slice(0, line.indexOf("M"));
-        
         valor = obter_valor_da_data(data);
     
         var line_sem_principio = line.slice(pos_transf+10);
@@ -277,13 +276,13 @@ function obter_pps_comprados(){
         
         switch (qtd_e_tiporecurso[1]){
         	case 1:
-            	precos_madeira[madeira_cont]=[data, parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados),  , ,1 ];
+            	precos_madeira[madeira_cont]=[valor, parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados),  , ,];
         		break;
             case 2:
-            	precos_madeira[madeira_cont]=[data, , parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados), ,1];
+            	precos_madeira[madeira_cont]=[valor, , parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados), ,];
         		break;
             case 3:
-            	precos_madeira[madeira_cont]=[data, ,  ,parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados),1];
+            	precos_madeira[madeira_cont]=[valor, ,  ,parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados),];
         }
         madeira_cont+=1;
 
@@ -333,11 +332,10 @@ function mainFunction() {
 function drawChart() {
             // Define the chart to be drawn.
             var data = new google.visualization.DataTable();
-            data.addColumn('string', 'String');
+            data.addColumn('number', 'String');
             data.addColumn('number', 'Madeira');
             data.addColumn('number', 'Argila');
             data.addColumn('number', 'Ferro');
-            data.addColumn('number', 'PPs na conta');
             data.addRows(precos_madeira);
                
             // Set chart options
