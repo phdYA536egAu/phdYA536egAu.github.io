@@ -38,8 +38,8 @@
 	<button onclick="calcula_unidades_mes()">Calcular unidades geradas num mes</button>
     
     <p>4. Com os pp's a este preço, compensa comprar PP's para depois gastar num aumento de 20% da produção da mina que inseriste em 2. ?</p>
-	<p id="boolean_compensa_sem">aqui</p>
-    <p id="boolean_compensa_mes">aqui2</p>
+	<p id="boolean_compensa_sem">Compensa gastar num aumento de 20% de produção durante uma semana?</p>
+    <p id="boolean_compensa_mes">Compensa gastar num aumento de 20% de produção durante uma semana?</p>
 	<button onclick="boolean_compensa()">Compensa?</button>
     
     <script>
@@ -106,9 +106,11 @@
 <p>Precos pp:</p>
 <p id="pp"></p>
 
-<div id = "container" style = "width: 550px; height: 400px; margin: 0 auto">
+<div id = "chartMadeira" style = "width: 550px; height: 400px; margin: 0 auto">
 </div>
 <div id = "chartArgila" style = "width: 550px; height: 400px; margin: 0 auto">
+</div>
+<div id = "chartFerro" style = "width: 550px; height: 400px; margin: 0 auto">
 </div>
 
 <script>
@@ -128,8 +130,10 @@ var total_gasto_em_ferro=0;
 
 var precos_madeira=[];
 var precos_argila=[];
+var precos_ferro=[];
 var madeira_cont=0;
 var argila_cont=0;
+var ferro_cont=0;
 
 function displayLines(){
   linesLength = lines.length;
@@ -288,7 +292,8 @@ function obter_pps_comprados(){
                 argila_cont+=1;
         		break;
             case 3:
-            	precos_madeira[madeira_cont]=[valor, ,  ,parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados),];
+            	precos_ferro[ferro_cont]=[valor, parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados), , ,];
+                ferro_cont+=1;
         }
         return parseInt(pps_comprados);  
     }
@@ -329,12 +334,13 @@ function mainFunction() {
   
   document.getElementById("pp").innerHTML = text;
   
-  drawChart();
+  drawChartMadeira();
   drawChartArgila();
+  drawChartFerro();
 }
 
 //------CHARTS---------//
-function drawChart() {
+function drawChartMadeira() {
             // Define the chart to be drawn.
             var data = new google.visualization.DataTable();
             data.addColumn('number', 'String');
@@ -344,7 +350,7 @@ function drawChart() {
             data.addRows(precos_madeira);
                
             // Set chart options
-            var options = {'title' : 'Quanto custa comprar 1PP:',
+            var options = {'title' : 'Quanto custa comprar 1PP com madeira:',
                hAxis: {
                   title: 'Data'
                },
@@ -358,10 +364,10 @@ function drawChart() {
             };
 
             // Instantiate and draw the chart.
-            var chart = new google.visualization.LineChart(document.getElementById('container'));
+            var chart = new google.visualization.LineChart(document.getElementById('chartMadeira'));
             chart.draw(data, options);
          }
-         google.charts.setOnLoadCallback(drawChart);
+         google.charts.setOnLoadCallback(drawChartMadeira);
          
 function drawChartArgila() {
             // Define the chart to be drawn.
@@ -392,6 +398,35 @@ function drawChartArgila() {
 }
 
 google.charts.setOnLoadCallback(drawChartArgila);
+function drawChartFerro() {
+            // Define the chart to be drawn.
+            var data_ferr = new google.visualization.DataTable();
+            data_ferr.addColumn('number', 'String');
+            data_ferr.addColumn('number', 'Ferro');
+            data_ferr.addColumn('number', 'Ignore this');
+            data_ferr.addColumn('number', 'Ignore this');
+            data_ferr.addRows(precos_ferro);
+               
+            // Set chart options
+            var options_ferr = {'title' : 'Quanto custa comprar 1PP com ferro:',
+               hAxis: {
+                  title: 'Data'
+               },
+               vAxis: {
+                  title: 'Recurso'
+               },   
+               'width':550,
+               'height':400,
+               colors:['blue'],
+               pointsVisible: true	  
+            };
+
+            // Instantiate and draw the chart.
+            var chart_ferr = new google.visualization.LineChart(document.getElementById('chartFerro'));
+            chart_ferr.draw(data_ferr, options_ferr);
+}
+
+google.charts.setOnLoadCallback(drawChartFerro);
 </script>
 
 </div>
