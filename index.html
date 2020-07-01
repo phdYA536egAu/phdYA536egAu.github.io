@@ -339,8 +339,8 @@ function drawChart() {
             var data = new google.visualization.DataTable();
             data.addColumn('number', 'String');
             data.addColumn('number', 'Madeira');
-            data.addColumn('number', 'Argila');
-            data.addColumn('number', 'Ferro');
+            data.addColumn('number', 'Ignore this');
+            data.addColumn('number', 'Ignore this');
             data.addRows(precos_madeira);
                
             // Set chart options
@@ -353,6 +353,7 @@ function drawChart() {
                },   
                'width':550,
                'height':400,
+               colors:['brown'],
                pointsVisible: true	  
             };
 
@@ -367,8 +368,8 @@ function drawChartArgila() {
             var data_arg = new google.visualization.DataTable();
             data_arg.addColumn('number', 'String');
             data_arg.addColumn('number', 'Argila');
-            data_arg.addColumn('number', 'Argila');
-            data_arg.addColumn('number', 'Ferro');
+            data_arg.addColumn('number', 'Ignore this');
+            data_arg.addColumn('number', 'Ignore this');
             data_arg.addRows(precos_argila);
                
             // Set chart options
