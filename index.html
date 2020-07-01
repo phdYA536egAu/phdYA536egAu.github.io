@@ -5,10 +5,8 @@
 	<script type = "text/javascript" src = "https://www.gstatic.com/charts/loader.js">
 	</script>
 	<script type = "text/javascript">
-		google.load('visualization', '1.1', {
-        packages: ['line', 'corechart']
-    });
-    </script>  
+		google.charts.load('current', {packages: ['corechart','line']});  
+	</script>  
     
     <style>
 
@@ -108,7 +106,7 @@
 <p>Precos pp:</p>
 <p id="pp"></p>
 
-<div id = "chartMadeira" style = "width: 550px; height: 400px; margin: 0 auto">
+<div id = "container" style = "width: 550px; height: 400px; margin: 0 auto">
 </div>
 <div id = "chartArgila" style = "width: 550px; height: 400px; margin: 0 auto">
 </div>
@@ -282,17 +280,16 @@ function obter_pps_comprados(){
         
         switch (qtd_e_tiporecurso[1]){
         	case 1:
-            	precos_madeira[madeira_cont]=[valor, parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados),  , ,];
+            	precos_madeira[madeira_cont]=[valor, parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados), , ,];
+                madeira_cont+=1;
         		break;
             case 2:
-            	precos_argila[argila_cont]=[valor, , parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados), ,];
+            	precos_argila[argila_cont]=[valor, parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados), , ,];
+                argila_cont+=1;
         		break;
             case 3:
             	precos_madeira[madeira_cont]=[valor, ,  ,parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados),];
         }
-        madeira_cont+=1;
-        argila_cont+=1;
-
         return parseInt(pps_comprados);  
     }
 }
@@ -332,20 +329,22 @@ function mainFunction() {
   
   document.getElementById("pp").innerHTML = text;
   
-  drawChartMadeira();
+  drawChart();
   drawChartArgila();
 }
 
 //------CHARTS---------//
-function drawChartMadeira() {
+function drawChart() {
             // Define the chart to be drawn.
             var data = new google.visualization.DataTable();
             data.addColumn('number', 'String');
             data.addColumn('number', 'Madeira');
+            data.addColumn('number', 'Argila');
+            data.addColumn('number', 'Ferro');
             data.addRows(precos_madeira);
                
             // Set chart options
-            var options = {'title' : 'Quanto custa comprar 1PP com madeira:',
+            var options = {'title' : 'Quanto custa comprar 1PP:',
                hAxis: {
                   title: 'Data'
                },
@@ -354,19 +353,22 @@ function drawChartMadeira() {
                },   
                'width':550,
                'height':400,
-               colors:['brown'],
                pointsVisible: true	  
             };
 
             // Instantiate and draw the chart.
-            var chart = new google.visualization.LineChart(document.getElementById('chartMadeira'));
+            var chart = new google.visualization.LineChart(document.getElementById('container'));
             chart.draw(data, options);
-}
+         }
+         google.charts.setOnLoadCallback(drawChart);
+         
 function drawChartArgila() {
             // Define the chart to be drawn.
             var data_arg = new google.visualization.DataTable();
             data_arg.addColumn('number', 'String');
             data_arg.addColumn('number', 'Argila');
+            data_arg.addColumn('number', 'Argila');
+            data_arg.addColumn('number', 'Ferro');
             data_arg.addRows(precos_argila);
                
             // Set chart options
@@ -387,12 +389,10 @@ function drawChartArgila() {
             var chart_arg = new google.visualization.LineChart(document.getElementById('chartArgila'));
             chart_arg.draw(data_arg, options_arg);
 }
-google.charts.setOnLoadCallback(drawChartMadeira);
+
 google.charts.setOnLoadCallback(drawChartArgila);
 </script>
 
 </div>
 </body>
 </html>
-
-
