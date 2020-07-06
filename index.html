@@ -146,6 +146,7 @@ var total_pps_comprados=0;
 var total_pps_usados=0;
 
 var total_gasto_em_madeira=0;
+var total_gasto_em_madeira_arr=[];
 var total_gasto_em_argila=0;
 var total_gasto_em_ferro=0;
 
@@ -216,6 +217,7 @@ function obter_qtd_de_recurso_gasto(linha_sem_principio, prim_esp){
     	//Obter qtd de madeira gasta a comprar os pps
         qtd=linha_sem_principio.slice(linha_sem_principio.indexOf("(")+1, linha_sem_principio.length);
         total_gasto_em_madeira += parseInt(qtd);
+      	total_gasto_em_madeira_arr[madeira_cont]=total_gasto_em_madeira+qtd;
         document.getElementById("mundo_da_linha").innerHTML = total_gasto_em_madeira;
         tipo_de_recurso=1;
     }
@@ -333,7 +335,7 @@ function obter_pps_comprados(){
         switch (qtd_e_tiporecurso[1]){
         	case 1:
             	precos_madeira[madeira_cont]=[valor, parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados), , ,];
-                rec_gastos_mad[madeira_cont]=[valor, qtd_e_tiporecurso[0], total_gasto_em_madeira, ,];
+                rec_gastos_mad[madeira_cont]=[valor, qtd_e_tiporecurso[0], , ,];
                 madeira_cont+=1;
         		break;
             case 2:
@@ -377,21 +379,25 @@ function mainFunction() {
   document.getElementById("total_argila").innerHTML = total_gasto_em_argila;
   document.getElementById("total_ferro").innerHTML = total_gasto_em_ferro;
   
-  text = "<ul>";
-  
-  for (i = 0; i < precos_madeira.length; i++) {
-  	text += '<li>' + precos_madeira[i][0] + ":::" + precos_madeira[i][1] + "--" + precos_madeira[i][2] + "--" + precos_madeira[i][3] + "--" + precos_madeira[i][4]+"</li>";
-  }
-  
-  text += "</ul>";
-  
-  document.getElementById("pp").innerHTML = text;
-  
   drawChartMadeira();
   drawChartArgila();
   drawChartFerro();
   drawChartMadeiraRec();
+  
+  for(k=0; k<madeira_cont+1; k++){
+            	rec_gastos_mad[k][2]=total_gasto_em_madeira_arr[k];
+            }
+  
+  text = "<ul>";
+  
+  for (i = 0; i < precos_madeira.length; i++) {
+  	text += '<li>' + precos_madeira[i][0] + ":::" + precos_madeira[i][1] + "--" + precos_madeira[i][2] + "--" + precos_madeira[i][3] + "--" + precos_madeira[i][4]+ "ççç:"+ total_gasto_em_madeira_arr+"</li>";
+  }
+  
+  text += "</ul>";
 }
+
+document.getElementById("pp").innerHTML = text;
 
 //------CHARTS---------//
 function drawChartMadeira() {
@@ -424,11 +430,13 @@ function drawChartMadeira() {
          google.charts.setOnLoadCallback(drawChartMadeira);
 function drawChartMadeiraRec() {
             // Define the chart to be drawn.
+            var k;
             var data = new google.visualization.DataTable();
             data.addColumn('number', 'String');
             data.addColumn('number', 'Madeira gasta numa certa data');
             data.addColumn('number', 'Total gasto até agora');
             data.addColumn('number', 'Ignore this');
+            
             data.addRows(rec_gastos_mad);
                
             // Set chart options
