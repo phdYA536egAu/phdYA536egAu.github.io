@@ -111,6 +111,16 @@
 <p>Mundo de uma linha:</p>
 <p id="mundo_da_linha"></p>
 
+<p style="font-weight:bold;">Nota: o que são os números no eixo das abcissas?</p>
+<p>Estes números correspondem às data em que os pp's foram comprados.</p>
+<p>Exemplo: 295,222 corresponde à data jun 17, 13:41</p>
+<p>Calculadora de datas</p>
+<input type="text" id="Data_a_calcular" maxlenght="99999" value="295222">
+<button onclick="calculadora_de_datas()">Calcular data (Não usar vírgula nem ponto! )</button>
+<p>Data:</p>
+<p id="data">jun 17, 13:41</p>
+
+
 <div id = "chartMadeira" style = "width: 550px; height: 400px; margin: 0 auto">
 </div>
 <div id = "chartArgila" style = "width: 550px; height: 400px; margin: 0 auto">
@@ -276,8 +286,22 @@ function obter_valor_da_data(data_str){
     //Obter min
     min_str=data_str.slice(data_str.indexOf(":")+1, data_str.indexOf("M"));
     
-    return mes_num*(31*24*60)+parseInt(dia_str)*(24*60)+(parseInt(hora_str)+1)*60+(parseInt(min_str)+1);
+    return 2020+mes_num*31*24*60+parseInt(dia_str)*24*60+(parseInt(hora_str)+1)*60+(parseInt(min_str)+1);
     
+}
+function calculadora_de_datas(){
+	var num = document.getElementById("Data_a_calcular").value;
+    
+    num = parseInt(num) - 2020;
+    
+    var mes,dia,hora,min;
+    
+    mes=Math.floor(num/(31*24*60));
+    dia=Math.floor(((num/(31*24*60))-mes)*31);
+    hora=Math.floor(((((num/(31*24*60))-mes)*31)-dia)*24)-1;
+    min=Math.floor(((((((num/(31*24*60))-mes)*31)-dia)*24)-1-hora)*60-1);
+    
+    document.getElementById("data").innerHTML = "dia:"+dia+"/"+mes+"/2020 -> hora:"+hora+":"+min;
 }
 
 function obter_pps_comprados(){
