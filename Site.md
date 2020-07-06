@@ -1,3 +1,6 @@
+#Bugs</br>
+- na parte a castanho, no ponto 4, os ganhos têm valor negativo e as perdas também
+
 #Monetizacao do site</br>
 
 https://codefund.io/ -> anuncios para o público dos developers
