@@ -83,14 +83,17 @@
 
 
 <div class="right-div">
-<p>Copia e cola as linhas COMPLETAS do teu historico de pontos</p>
+<p>Escolhe um mundo: </p>
+<input type="text" id="myWorld" maxlenght="99999" value="Exemplo:'74'">
 
-<input type="text" id="myText" maxlenght="10000" value="Some text...">
-
+<p>Copia e cola as linhas COMPLETAS do teu historico de pontos ->meter aqui um exemplo>- </p>
+<input type="text" id="myText" maxlenght="99999" value="Maximo: 99.999 caracteres. Copia uma linha para aqui.">
 <button onclick="mainFunction()">Calcular custo dos PP's comprados</button>
 
 <p>Teste:</p>
 <p id="teste"></p>
+<p>Teste2:</p>
+<p id="teste2"></p>
 <p>Input:</p>
 <p id="input"></p>
 <p>Total pp's comprados:</p>
@@ -105,6 +108,8 @@
 <p style="color:darkgrey; font-weight:bold;" id="total_ferro"></p>
 <p>Precos pp:</p>
 <p id="pp"></p>
+<p>Mundo de uma linha:</p>
+<p id="mundo_da_linha"></p>
 
 <div id = "chartMadeira" style = "width: 550px; height: 400px; margin: 0 auto">
 </div>
@@ -135,6 +140,14 @@ var madeira_cont=0;
 var argila_cont=0;
 var ferro_cont=0;
 
+function obterMundo(linha_introduzida){
+	var mundo = linha_introduzida;
+    
+    mundo = mundo.slice(mundo.indexOf("M")+6, mundo.indexOf("M")+8);
+    
+    return mundo;
+}
+
 function displayLines(){
   linesLength = lines.length;
 
@@ -148,7 +161,7 @@ function displayLines(){
 
 }
 
-function obterLinhas(){
+function obterLinhas(mundo_e){
     var input = document.getElementById("myText").value;
 
     for (i = 0; i < input.length; i++) {
@@ -156,20 +169,22 @@ function obterLinhas(){
         if ( bool ){
             line = line.concat(input.substr(i, 1));
         }
-        else{
-        	var pos_transf = line.indexOf("Transferir");
+        else{	
+        	if ( mundo_e==obterMundo(line) ){
+				var pos_transf = line.indexOf("Transferir");
+			
+    			if (pos_transf != -1 ){
+            		total_pps_comprados+=obter_pps_comprados();
+            	}
+            	var pos_ut = line.indexOf("Utilizados");
 
-    		if (pos_transf != -1 ){
-            	total_pps_comprados+=obter_pps_comprados();
+    			if (pos_ut != -1 ){
+            		total_pps_usados+=obter_pps_usados();
+            	}
+            	lines[line_counter]=line;
+            	line_counter+=1;
+            	line="";
             }
-            var pos_ut = line.indexOf("Utilizados");
-
-    		if (pos_ut != -1 ){
-            	total_pps_usados+=obter_pps_usados();
-            }
-            lines[line_counter]=line;
-            line_counter+=1;
-            line="";
         }
     }
 }
@@ -313,7 +328,11 @@ function obter_pps_usados(){
 
 function mainFunction() {
   var text;
-  obterLinhas();
+  
+  //Obter mundo escolhido pelo utilizador
+  var mundo_escolhido = document.getElementById("myWorld").value;
+  
+  obterLinhas(mundo_escolhido);
 
   displayLines();
 
