@@ -133,6 +133,10 @@
 
 <div id = "chartMadeiraRec" style = "width: 550px; height: 400px; margin: 0 auto">
 </div>
+<div id = "chartArgilaRec" style = "width: 550px; height: 400px; margin: 0 auto">
+</div>
+<div id = "chartFerroRec" style = "width: 550px; height: 400px; margin: 0 auto">
+</div>
 
 <script>
 var lines = [];
@@ -149,6 +153,8 @@ var total_gasto_em_madeira=0;
 var total_gasto_em_argila=0;
 var total_gasto_em_ferro=0;
 var tot_g_mad=[];
+var tot_g_arg=[];
+var tot_g_fer=[];
 
 var precos_madeira=[];
 var precos_argila=[];
@@ -158,6 +164,8 @@ var argila_cont=0;
 var ferro_cont=0;
 
 var rec_gastos_mad=[];
+var rec_gastos_arg=[];
+var rec_gastos_fer=[];
 
 function obterMundo(linha_introduzida){
 	var mundo = linha_introduzida;
@@ -340,10 +348,14 @@ function obter_pps_comprados(){
         		break;
             case 2:
             	precos_argila[argila_cont]=[valor, parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados), , ,];
+                rec_gastos_arg[argila_cont]=[valor, qtd_e_tiporecurso[0], , ,];
+                tot_g_arg[argila_cont]=qtd_e_tiporecurso[0];
                 argila_cont+=1;
         		break;
             case 3:
             	precos_ferro[ferro_cont]=[valor, parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados), , ,];
+                rec_gastos_fer[ferro_cont]=[valor, qtd_e_tiporecurso[0], , ,];
+                tot_g_fer[ferro_cont]=qtd_e_tiporecurso[0];
                 ferro_cont+=1;
         }
         return parseInt(pps_comprados);  
@@ -379,6 +391,8 @@ function mainFunction() {
   document.getElementById("total_argila").innerHTML = total_gasto_em_argila;
   document.getElementById("total_ferro").innerHTML = total_gasto_em_ferro;
   
+  //prints e loops necessarios para graficos de recurso gasto
+  //MADEIRA
   text = "<ul>";
   var aux_arr=[];
   var j=precos_madeira.length;
@@ -394,11 +408,40 @@ function mainFunction() {
   j=precos_madeira.length;
   for (i=0; i<precos_madeira.length; i++){
   	if (i>0){ aux_arr[i] += aux_arr[i-1]; }
-    
     j-=1;
     rec_gastos_mad[j][2]=aux_arr[i]; 
   	
     teste += aux_arr[i] + ";";  
+  }
+  
+  //ARGILA
+  aux_ar=[];
+  j=precos_argila.length;
+  for(i=0; i < precos_argila.length; i++){
+  	j-=1;
+    aux_arr[i]=tot_g_arg[j];
+  }
+  
+  j=precos_argila.length;
+  for (i=0; i<precos_argila.length; i++){
+  	if (i>0){ aux_arr[i] += aux_arr[i-1]; }
+    j-=1;
+    rec_gastos_arg[j][2]=aux_arr[i];  
+  }
+  
+  //FERRO
+  aux_ar=[];
+  j=precos_ferro.length;
+  for(i=0; i < precos_ferro.length; i++){
+  	j-=1;
+    aux_arr[i]=tot_g_fer[j];
+  }
+  
+  j=precos_ferro.length;
+  for (i=0; i<precos_ferro.length; i++){
+  	if (i>0){ aux_arr[i] += aux_arr[i-1]; }
+    j-=1;
+    rec_gastos_fer[j][2]=aux_arr[i];  
   }
   
   document.getElementById("pp").innerHTML = text;
@@ -408,6 +451,8 @@ function mainFunction() {
   drawChartArgila();
   drawChartFerro();
   drawChartMadeiraRec();
+  drawChartArgilaRec();
+  drawChartFerroRec();
 }
 
 //------CHARTS---------//
@@ -497,6 +542,36 @@ function drawChartArgila() {
 }
 
 google.charts.setOnLoadCallback(drawChartArgila);
+
+function drawChartArgilaRec() {
+            // Define the chart to be drawn.
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'String');
+            data.addColumn('number', 'Argila gasta numa certa data');
+            data.addColumn('number', 'Total gasto até agora');
+            data.addColumn('number', 'Ignore this');
+            data.addRows(rec_gastos_arg);
+               
+            // Set chart options
+            var options = {'title' : 'Quanto gastaste em argila a comprar PPs:',
+               hAxis: {
+                  title: 'Data'
+               },
+               vAxis: {
+                  title: 'Recurso'
+               },   
+               'width':550,
+               'height':400,
+               colors:['yellow', 'black'],
+               pointsVisible: true	  
+            };
+
+            // Instantiate and draw the chart.
+            var chart = new google.visualization.LineChart(document.getElementById('chartArgilaRec'));
+            chart.draw(data, options);
+         }
+google.charts.setOnLoadCallback(drawChartArgilaRec);
+
 function drawChartFerro() {
             // Define the chart to be drawn.
             var data_ferr = new google.visualization.DataTable();
@@ -526,6 +601,35 @@ function drawChartFerro() {
 }
 
 google.charts.setOnLoadCallback(drawChartFerro);
+
+function drawChartFerroRec() {
+            // Define the chart to be drawn.
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'String');
+            data.addColumn('number', 'Ferro gasto numa certa data');
+            data.addColumn('number', 'Total gasto até agora');
+            data.addColumn('number', 'Ignore this');
+            data.addRows(rec_gastos_fer);
+               
+            // Set chart options
+            var options = {'title' : 'Quanto gastaste em ferro a comprar PPs:',
+               hAxis: {
+                  title: 'Data'
+               },
+               vAxis: {
+                  title: 'Recurso'
+               },   
+               'width':550,
+               'height':400,
+               colors:['blue', 'black'],
+               pointsVisible: true	  
+            };
+
+            // Instantiate and draw the chart.
+            var chart = new google.visualization.LineChart(document.getElementById('chartFerroRec'));
+            chart.draw(data, options);
+         }
+google.charts.setOnLoadCallback(drawChartFerroRec); 
 </script>
 
 </div>
