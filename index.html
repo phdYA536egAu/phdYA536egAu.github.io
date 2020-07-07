@@ -382,23 +382,27 @@ function mainFunction() {
   text = "<ul>";
   var aux_arr=[];
   var j=precos_madeira.length;
-  for (i = 0; i < j; i++) {
+  for (i = 0; i < precos_madeira.length; i++) {
   	text += '<li>' + precos_madeira[i][0] + ":::" + precos_madeira[i][1] + "--" + precos_madeira[i][2] + "--" + precos_madeira[i][3] + "--" + precos_madeira[i][4]+"ççç"+tot_g_mad[i]+"</li>";
+    
     j-=1;
    	aux_arr[i]=tot_g_mad[j];
-    rec_gastos_mad[i][2]=aux_arr[i]; 
-    //if (i>0){ rec_gastos_mad[i][2]+=rec_gastos_mad[i-1][2]; }
   }
-  var teste="";
-  for (i=0; i<precos_madeira.length; i++){
-  	teste += aux_arr[i] + ";";
-  }
-  
   text += "</ul>";
   
-  document.getElementById("pp").innerHTML = teste;
+  var teste="";
+  j=precos_madeira.length;
+  for (i=0; i<precos_madeira.length; i++){
+  	if (i>0){ aux_arr[i] += aux_arr[i-1]; }
+    
+    j-=1;
+    rec_gastos_mad[j][2]=aux_arr[i]; 
+  	
+    teste += aux_arr[i] + ";";  
+  }
   
-  
+  document.getElementById("pp").innerHTML = text;
+  document.getElementById("mundo_da_linha").innerHTML = teste;
   
   drawChartMadeira();
   drawChartArgila();
@@ -527,3 +531,4 @@ google.charts.setOnLoadCallback(drawChartFerro);
 </div>
 </body>
 </html>
+
