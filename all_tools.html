@@ -8,7 +8,35 @@
 		google.charts.load('current', {packages: ['corechart','line']});  
 	</script>  
     
-    <style>
+<style>
+	body {
+  		margin: 0;
+  		font-family: Arial, Helvetica, sans-serif;
+	}
+
+	.topnav {
+  		overflow: hidden;
+  		background-color: #333;
+	}
+
+	.topnav a {
+  		float: left;
+  		color: #f2f2f2;
+  		text-align: center;
+  		padding: 14px 16px;
+  		text-decoration: none;
+  		font-size: 17px;
+	}
+
+	.topnav a:hover {
+  		background-color: #ddd;
+  		color: black;
+	}
+
+	.topnav a.active {
+  		background-color: #a94f06;
+  		color: white;
+	}
 
 	.left-div {
     	background-color: linen;
@@ -21,6 +49,22 @@
 </head>
 
 <body>
+	
+<div class="topnav">
+  <a class="active" href="/index.html">Home</a>
+  <a href="/all_tools.html">Calculadora +20% Prod.</a>
+  <a href="/all_tools.html">Gráficos compra/venda PP's</a>
+  <a href="/all_tools.html">Bugs & Contacto</a>
+</div>
+
+<div style="padding-left:16px">
+  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick" />
+<input type="hidden" name="hosted_button_id" value="XVTCHQABVRRLU" />
+<input type="image" src="https://www.paypalobjects.com/pt_PT/PT/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Faça donativos com o botão PayPal" />
+<img alt="" border="0" src="https://www.paypal.com/pt_PT/i/scr/pixel.gif" width="1" height="1" />
+</form>
+</div>
 
 <div class="right-div">
 <p>Escolhe um mundo: </p>
