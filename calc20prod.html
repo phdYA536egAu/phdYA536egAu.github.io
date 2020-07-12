@@ -97,10 +97,10 @@ body {
         }
         
         if ( parseInt(preco_do_pp)*150 < un_mes ){
-        	document.getElementById("boolean_compensa_mes").innerHTML = "Sim. Se comprares 150 PPs do recurso escolhido em 1. 150 PP's vão-te custar " + 150*parseInt(preco_do_pp) + " unidades mas produzes mais " + un_mes + "unidades do recurso escolhido em 2. num mês. Vais ganhar " + (150*parseInt(preco_do_pp)-un_sem) + " unidades do recurso escolhido em 2. (depois podes trocar por outros recursos no mercado normal :) )";
+        	document.getElementById("boolean_compensa_mes").innerHTML = "Sim. Se comprares 150 PPs do recurso escolhido em 1. 150 PP's vão-te custar " + 150*parseInt(preco_do_pp) + " unidades mas produzes mais " + un_mes + "unidades do recurso escolhido em 2. num mês. Vais ganhar " + (150*parseInt(preco_do_pp)-un_mes) + " unidades do recurso escolhido em 2. (depois podes trocar por outros recursos no mercado normal :) )";
         }
         else{
-        	document.getElementById("boolean_compensa_mes").innerHTML = "Não. Se comprares 150 PPs do recurso escolhido em 1. 150 PP's vão-te custar " + 150*parseInt(preco_do_pp) + " unidades mas só produzes mais " + un_mes + "unidades do recurso escolhido em 2. num mês por tanto vais gastar " +  (un_sem-150*parseInt(preco_do_pp)) + " unidades do recurso escolhido em 2. desnecessariamente.";
+        	document.getElementById("boolean_compensa_mes").innerHTML = "Não. Se comprares 150 PPs do recurso escolhido em 1. 150 PP's vão-te custar " + 150*parseInt(preco_do_pp) + " unidades mas só produzes mais " + un_mes + "unidades do recurso escolhido em 2. num mês por tanto vais gastar " +  (un_mes-150*parseInt(preco_do_pp)) + " unidades do recurso escolhido em 2. desnecessariamente.";
         }
     }
         
