@@ -8,22 +8,26 @@
 
 <h4>Choose the number of players</h4>
 <input type="text" id="numPLAYERS" maxlenght="100" value="number of players">
+<h4>Choose the number of spies (max 3)</h4>
+<input type="text" id="numSPIES" maxlenght="100" value="1,2 or 3">
 <button onclick="play()">play</button>
-<p id="nota1">Note: you have to press play after introducing the number of players and before pressing show card.</p>
-<p id="nota2">Nota: tens de carregar no play depois de introduzir o numero de jogadores e antes de carregar em show card.</p>
 <h4>Chose your dictionary</h4>
 <div>
   <input type="radio" id="r1" name="rate" value="575 english words" checked="checked"> 575 english words
-  <input type="radio" id="r2" name="rate" value="682 palavras em portugues" > 682 palavras em portugues 
+  <input type="radio" id="r2" name="rate" value="682 palavras em portugues" > 682 palavras em português 
 </div>
-<p id="card">cenas</p>
+<p id="nota1">Note: you have to press play after introducing the number of players and before pressing show card.</p>
+<p id="nota2">Nota: tens de carregar no play depois de introduzir o numero de jogadores e antes de carregar em show card.</p>
+<p id="card"></p>
 <button onclick="show_card()">show card</button>
 <button onclick="hide_card()">hide card</button>
 <script>
-var num_players,spy, jogador=1;
+var num_players,spy, spies=[], num_spies=1,jogador=1;
 var carta;
 function play(){
+  jogador=1; //para se poder recomeçar o jogo carregando no play
   num_players = document.getElementById("numPLAYERS").value;
+  num_spies = document.getElementById("numSPIES").value;
   document.getElementById("nota1").innerHTML = " ";
   document.getElementById("nota2").innerHTML = " ";
   carta=obter_carta();
@@ -31,13 +35,22 @@ function play(){
 }
 
 function show_cards(){
-	var i;
+	var i, text="dlkmlkds:", rep_spies=1;
 	spy=Math.floor(Math.random() * num_players)+1;
 	document.getElementById("card").innerHTML = "Now each player has to click show card and hide card";
-	/*for (i = 0; i < num_players; i++) {
-   		show_card(i);
-   		document.getElementById("card").innerHTML = "pass to the next player";
-	}*/
+	if (num_spies==2){
+    	spies[0]=spy;
+    	spies[1]=spy;
+    	while (spies[1]==spies[0]){
+    		spies[1]=Math.floor(Math.random() * num_players)+1;
+    	}
+    }
+    if (num_spies==3){
+    	spies[2]=spy;
+        while (spies[2]==spies[0] || spies[2]==spies[1]){
+    		spies[2]=Math.floor(Math.random() * num_players)+1;
+    	}
+    }
 }
 
 function obter_carta(){
@@ -63,12 +76,28 @@ function hide_card(){
 }
 
 function show_card() {
-	if (jogador==spy){
-		document.getElementById("card").innerHTML = "Player "+ jogador + ": you are the spy";
-	}
-	else{
-		document.getElementById("card").innerHTML = "Player "+ jogador + ": "+ carta;
-	}
+var j;
+check=false;
+	if (num_spies==1){
+    	if (jogador==spy){
+			document.getElementById("card").innerHTML = "Player "+ jogador + ": you are the spy";
+		}
+		else{
+			document.getElementById("card").innerHTML = "Player "+ jogador + ": "+ carta;
+		}
+    }
+    else{
+    	for (j = 0; j < num_players; j++) {
+        	if (jogador==spies[j]){
+            	document.getElementById("card").innerHTML = "Player "+ jogador + ": you are the spy";
+				check=true;
+            }
+   		}
+        if (check==false){
+        	document.getElementById("card").innerHTML = "Player "+ jogador + ": "+ carta;
+        }
+        check=false;
+    }
     if (jogador>num_players){
     	document.getElementById("card").innerHTML = "Now set a timer, ask questions and find the spy! Before the timer ends the spy can try to guess the word once. If the spy fails, he can't try anymore and he has lost the game but if he guesses the word correctly, he wins the game. After the timer finnishes all players must vote on who they think the spy is and if they guess correctly, they win, if they don't, the spy wins";
     }
