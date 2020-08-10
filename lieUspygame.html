@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>LieU Spy</title>
+</head>
+<body>
+
+
+<p>choose number of players</p>
+<input type="text" id="numPLAYERS" maxlenght="100" value="number of players">
+<button onclick="play()">play</button>
+<p id="card">cenas</p><button onclick="show_card()">show card</button>
+<script>
+var num_players,spy;
+function play(){
+  num_players = document.getElementById("numPLAYERS").value;
+  show_cards();
+}
+
+function show_cards(){
+	var i;
+	document.getElementById("card").innerHTML = "show button";
+	spy=Math.floor(Math.random() * num_players)+1;
+	
+	for (i = 0; i < num_players; i++) {
+   		show_card(i);
+   		document.getElementById("card").innerHTML = "pass to the next player";
+	}
+    
+	document.getElementById("card").innerHTML = "Now set a timer, ask questions and find the spy!";
+}
+
+function obter_carta(){
+	var carta_escolhida=Math.floor(Math.random() * 5);
+	cartas=["Lisboa", "Rua das Janelas Verdes", "Fonte", "Cais do Sodre", "Bairro Alto"];
+	return cartas[carta_escolhida];
+}
+
+function show_card(jogador) {
+	var carta;
+	if (jogador==spy){
+		document.getElementById("card").innerHTML = "you are the spy";
+	}
+	else{
+		carta=obter_carta();
+		document.getElementById("card").innerHTML = carta;
+	}
+}
+
+</script>
+
+
+</body>
+</html>
