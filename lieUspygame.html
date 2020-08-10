@@ -6,45 +6,72 @@
 <body>
 
 
-<p>choose number of players</p>
+<h4>Choose the number of players</h4>
 <input type="text" id="numPLAYERS" maxlenght="100" value="number of players">
 <button onclick="play()">play</button>
-<p id="card">cenas</p><button onclick="show_card()">show card</button>
+<p id="nota1">Note: you have to press play after introducing the number of players and before pressing show card.</p>
+<p id="nota2">Nota: tens de carregar no play depois de introduzir o numero de jogadores e antes de carregar em show card.</p>
+<h4>Chose your dictionary</h4>
+<div>
+  <input type="radio" id="r1" name="rate" value="575 english words" checked="checked"> 575 english words
+  <input type="radio" id="r2" name="rate" value="Algumas palavras em portugues" > Algumas palavras em portugues 
+</div>
+<p id="card">cenas</p>
+<button onclick="show_card()">show card</button>
+<button onclick="hide_card()">hide card</button>
 <script>
-var num_players,spy;
+var num_players,spy, jogador=1;
+var carta;
 function play(){
   num_players = document.getElementById("numPLAYERS").value;
+  document.getElementById("nota1").innerHTML = " ";
+  document.getElementById("nota2").innerHTML = " ";
+  carta=obter_carta();
   show_cards();
 }
 
 function show_cards(){
 	var i;
-	document.getElementById("card").innerHTML = "show button";
 	spy=Math.floor(Math.random() * num_players)+1;
-	
-	for (i = 0; i < num_players; i++) {
+	document.getElementById("card").innerHTML = "Now each player has to click show card and hide card";
+	/*for (i = 0; i < num_players; i++) {
    		show_card(i);
    		document.getElementById("card").innerHTML = "pass to the next player";
-	}
-    
-	document.getElementById("card").innerHTML = "Now set a timer, ask questions and find the spy!";
+	}*/
 }
 
 function obter_carta(){
 	var carta_escolhida=Math.floor(Math.random() * 5);
 	cartas=["Lisboa", "Rua das Janelas Verdes", "Fonte", "Cais do Sodre", "Bairro Alto"];
-	return cartas[carta_escolhida];
-}
-
-function show_card(jogador) {
-	var carta;
-	if (jogador==spy){
-		document.getElementById("card").innerHTML = "you are the spy";
+    if (document.getElementById('r1').checked) {
+  		return cartas[carta_escolhida];
 	}
 	else{
-		carta=obter_carta();
-		document.getElementById("card").innerHTML = carta;
+    	return dicionario_585words_ENG(Math.floor(Math.random() * 575));
+}
+
+function dicionario_575words_ENG(num_da_palavra){
+	palavras = ["act","active","activity","age","air","amount","answer","anything","apple","area","arm","army","art","ask","attack","baby","back","bad","bag","ball","bank","base","basket","bath","bear","beautiful","bed","bedroom","beer","bell","big","bird","birth","birthday","bit","bite","black","block","blood","blow","blue","board","boat","body","bone","book","border","bottle","bottom","bowl","box","boy","branch","brave","bread","breakfast","bridge","brother","brown","brush","burn","business","bus","buy","cake","call","can","candle","cap","car","card","care","carry","cat","chair","chance","change","chicken","child","chocolate","choice","city","clock","clothes","cloud","coffee","coat","cold","comfortable","common","computer","condition","control","cook","corner","cost","count","country","course","cover","crash","cross","cry","cup","cut","dance","dark","daughter","day","dead","deep","desk","dinner","direction","dish","dog","door","double","draw","dream","dress","drink","drive","drop","dust","duty","ear","earth","east","eat","education","effect","egg","end","equal","entrance","escape","evening","examination","example","exercise","eye","face","fact","fail","fall","family","farm","father","fat","fault","fear","feed","feel","female","few","fight","fill","film","finger","finish","fire","fish","fix","floor","flower","fly","fold","food","foot","football","force","form","freedom","friend","front","fruit","fun","funny","future","game","garden","gate","general","gift","give","glad","glass","go","god","gold","good","grandfather","grandmother","grass","great","green","ground","group","hair","half","hall","hand","hat","hate","head","heavy","heart","height","hello","help","hide","high","hit","hold","hole","holiday","home","hope","horse","hospital","hotel","house","hour","hurry","husband","hurt","ice","idea","increase","inside","iron","invite","island","it","job","join","juice","jump","keep","key","kill","kind","king","kitchen","knee","knife","ladder","lady","land","laugh","lead","leave","leg","length","lesson","letter","library","lie","life","light","lip","list","listen","lock","long","look","love","low","luck","machine","main","make","male","man","many","map","mark","market","matter","meal","meat","medicine","meet","member","mention","method","middle","milk","mind","minute","miss","mistake","mix","model","moment","money","month","morning","most","mother","mountain","mouth","move","music","name","nation","nature","neck","net","news","newspaper","night","noise","north","nose","nothing","notice","number","object","offer","office","oil","one","opposite","orange","order","other","outside","page","pain","paint","pair","paper","parent","park","part","partner","party","pass","past","path","pay","peace","pen","people","period","person","piano","pick","picture","piece","pin","place","plane","plant","plastic","plate","play","plenty","point","police","pool","position","possible","potato","power","present","press","price","private","prize","problem","produce","promise","public","pull","push","put","queen","question","quiet","radio","rain","raise","reach","read","record","red","remove","rent","repair","repeat","reply","report","rest","restaurant","result","rice","rich","ride","ring","rise","road","rock","room","round","rule","run","rush","sad","safe","sail","salt","sand","save","school","science","search","seat","second","sell","sentence","serve","sex","shake","shape","share","she","shine","ship","shirt","shoe","shoot","shop","shoulder","show","sick","side","signal","silly","silver","simple","single","sing","sink","sister","size","skill","skin","skirt","sky","sleep","slip","smell","smile","smoke","snow","sock","soft","son","sound","soup","south","space","special","speed","spell","spend","sport","spread","spring","square","stand","star","start","station","stay","steal","step","still","stomach","stop","store","storm","story","street","structure","student","study","stupid","subject","substance","sugar","summer","sun","support","surprise","sweet","swim","table","talk","taste","tea","teach","team","tear","telephone","television","tell","tennis","test","thing","tie","title","today","toe","tomorrow","tonight","tool","tooth","top","total","touch","town","train","travel","tree","trouble","trust","turn","type","uncle","unit","use","usual","vegetable","village","voice","visit","wait","wake","walk","wash","watch","water","way","wear","weather","wedding","week","weight","welcome","west","wheel","white","wife","will","win","wind","window","wine","winter","wish","woman","wonder","word","work","world","worry","yard","yesterday","you","young","two"];
+    
+ return palavras[num_da_palavra];
+
+}
+
+function hide_card(){
+	document.getElementById("card").innerHTML = "Now give the phone/computer to the next player and tell him/her to click show card";
+}
+
+function show_card() {
+	if (jogador==spy){
+		document.getElementById("card").innerHTML = "Player "+ jogador + ": you are the spy";
 	}
+	else{
+		document.getElementById("card").innerHTML = "Player "+ jogador + ": "+ carta;
+	}
+    if (jogador>num_players){
+    	document.getElementById("card").innerHTML = "Now set a timer, ask questions and find the spy! Before the timer ends the spy can try to guess the word once. If the spy fails, he can't try anymore and he has lost the game but if he guesses the word correctly, he wins the game. After the timer finnishes all players must vote on who they think the spy is and if they guess correctly, they win, if they don't, the spy wins";
+    }
+    jogador+=1;
 }
 
 </script>
