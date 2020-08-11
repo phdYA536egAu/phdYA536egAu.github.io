@@ -25,6 +25,12 @@
 
 <script>
 function play(){
+	var xhr=new XMLHttpRequest();
+xhr.open("GET","https://phdYA536egAu.github.io/test.txt");
+xhr.onload=function(){
+    document.getElementById("msgs").innerHTML = xhr.responseText;
+}
+xhr.send();
   text="";
   num_players = document.getElementById("numPLAYERS").value;
   if (num_players<4){document.getElementById("msgs").innerHTML = "The minimum amount of players for this game is 4 players/ O numero minimo de jogadores é 4.";}
