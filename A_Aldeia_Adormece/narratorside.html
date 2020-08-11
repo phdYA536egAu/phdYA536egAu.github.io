@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>LieU Spy</title>
+<style>
+	body {
+  		margin: 20;
+  		background-color: #FFE5CC;
+	}
+</style>
+</head>
+<body>
+
+
+<h4>Step1: Choose the number of players and then tell players they need to pick a name ( random names prevent cheating )</h4>
+<h4>1º passo: Escolhe o numero de jogadores e depois diz aos jogadores que tem de escolher um nome ( nomes aleatorios previnem batota )</h4>
+<input type="text" id="numPLAYERS" maxlenght="100" value="Min 4">
+
+<h4>Step2: When everyone's ready click play, they will be able to see their cards</h4>
+<h4>2º passo: When everyone's ready click play, they will be able to see their cards</h4>
+<button onclick="play()">PLAY</button>
+
+<p id="msgs"></p>
+
+<script>
+function play(){
+  text="";
+  num_players = document.getElementById("numPLAYERS").value;
+  if (num_players<4){document.getElementById("msgs").innerHTML = "The minimum amount of players for this game is 4 players/ O numero minimo de jogadores é 4.";}
+  
+  //cards=["Ace", "King", "Queen", "Villager"];
+  rand_cards=[];
+  var i;
+  /*for (i=0; i<num_players-4;i++){
+      cards[i+4]="Villager";
+  }*/
+  
+  // Randomize
+  for (i=0; i<num_players;i++){
+      rand_cards[i]="free";         
+  }
+  ace=Math.floor(Math.random() * num_players);
+  rand_cards[ace]="Ace";
+  king=Math.floor(Math.random() * num_players);
+  rand_cards[king]="King";
+  while (king==ace){
+      rand_cards[king]="Ace";
+      king=Math.floor(Math.random() * num_players);
+      rand_cards[king]="King";
+  }
+  queen=Math.floor(Math.random() * num_players);
+  rand_cards[queen]="Queen";
+  while (queen==ace || queen==king){
+  	  if (queen==ace){
+      	rand_cards[queen]="Ace";
+      }
+      else{
+      	rand_cards[queen]="King";
+      }
+      queen=Math.floor(Math.random() * num_players);
+      rand_cards[queen]="Queen";
+  }
+  
+  for (i=0; i<num_players;i++){
+      if(rand_cards[i]=="free"){
+        rand_cards[i]="Villager";
+      }
+  }
+  for (i=0; i<num_players;i++){
+      text+=i+":"+rand_cards[i];
+  }
+  document.getElementById("msgs").innerHTML =text;
+  
+}
+
+</script>
+
+
+</body>
+</html>
