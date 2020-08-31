@@ -43,7 +43,10 @@ body {
   color: black;
 }
  .left-div {
-  background-color: #fffaf5;
+  width: 600px; 
+  margin: auto;
+  padding-left:16px; 
+  padding-right:16px"
 }
 </style>
 </head>
@@ -58,28 +61,30 @@ body {
   </ul> 
 </div>
 
-<div style="width: 600px; padding-left:16px; padding-right:16px">
 <div class="left-div">
     <p>1.Insere o preco de um PP da unidade que queres gastar.</p>
-    <p>(Em phdya536egau.github.io/TWCalc/all_tools.html, tens uma ferramenta que te pode ajudar a prever o preco dos PPs a uma certa hora ou num certo dia)</p>
-	<input type="text" id="preco_pp" maxlenght="100" value="Preco do PP">
+    <input type="text" id="preco_pp" maxlenght="100" value="Preco do PP">
+    <p>(<a style="color:#000" href="phdya536egau.github.io/TWCalc/all_tools.html">Aqui</a> encontras uma ferramenta que te pode ajudar a prever o preco dos PPs a uma certa hora ou num certo dia)</p>
 
-	<p>2.Insere o as unidades por hora geradas em 'Aumento da produção de recursos de 20%' da mina em que vais gastar os PP's (para encontrar carrega em 'Bosque' ou noutra mina) </p>
+
+	<p>2.Insere as unidades por hora geradas em 'Aumento da produção de recursos de 20%' da mina em que vais gastar os PP's (para encontrar carrega em 'Bosque' ou noutra mina) </p>
 	<input type="text" id="unidades_hora" maxlenght="100" value="unidades/hora">
 
 	<p>3.Ao fim de uma semana, com o aumento de 20%, produzes mais</p>
-	<p id="_x7_x24"></p><p> unidades</p>
+	<p id="_x7_x24"></p><p>&lt;unidades&gt;</p>
 	<button onclick="calcula_unidades_semana()">Calcular unidades geradas numa semana</button>
 
 	<p>3.Ao fim de um mes, com o aumento de 20%, produzes mais</p>
-	<p id="_x30_x24"></p><p> unidades</p>
+	<p id="_x30_x24"></p><p>&lt;unidades&gt;</p>
 	<button onclick="calcula_unidades_mes()">Calcular unidades geradas num mes</button>
     
     <p>4. Com os pp's a este preço, compensa comprar PP's para depois gastar num aumento de 20% da produção da mina que inseriste em 2. ?</p>
-	<p id="boolean_compensa_sem">Compensa gastar num aumento de 20% de produção durante uma semana?</p>
-    <p id="boolean_compensa_mes">Compensa gastar num aumento de 20% de produção durante uma semana?</p>
+	<p id="boolean_compensa_sem">&lt;Compensa gastar num aumento de 20% de produção durante uma semana?&gt;</p>
+    <p id="boolean_compensa_mes">&lt;Compensa gastar num aumento de 20% de produção durante uma semana?&gt;</p>
 	<button onclick="boolean_compensa()">Compensa?</button>
-    
+    <br><br><br><br><br><br><br>
+
+</div>   
     <script>
 	function calcula_unidades_semana(){
 		var un_h=document.getElementById("unidades_hora").value;
@@ -117,8 +122,7 @@ body {
     }
         
 	</script>
-</div>
-</div>
+
   
 </body>
 </html>
