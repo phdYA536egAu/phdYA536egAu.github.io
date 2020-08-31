@@ -73,12 +73,12 @@ body {
 
 <div class="right-div">
 <p>Escolhe um mundo: </p>
-<input type="text" id="myWorld" maxlenght="99999" value="Exemplo:'74'">
+<input type="text" id="myWorld" maxlenght="99999" placeholder="Exemplo:'74'">
 
 <p>Copia e cola as linhas COMPLETAS do teu historico de pontos ->meter aqui um exemplo>- </p>
-<input type="text" id="myText" maxlenght="99999" value="Maximo: 99.999 caracteres. Copia uma linha para aqui.">
+<input type="text" id="myText" maxlenght="99999" placeholder="Copia aqui uma linha">
 <button onclick="mainFunction()">Calcular custo dos PP's comprados</button>
-<p>Nota: para copiar as várias páginas do teu histórico de pontos, copiar uma página, carrega em 'Calcular custo dos PP's comprados', apaga o que copiaste e agora já podes copiar outra página. </p>
+<p>Nota: para copiar as várias páginas do teu histórico de pontos: copia uma página, carrega em 'Calcular custo dos PP's comprados', apaga o que copiaste e agora já podes copiar outra página. </p>
 <p style="font-weight:bold">Para obteres gráficos mais completos, fala com os membros da tua tribo e pede-lhes o histórico de PPs deles; copia para aqui como se estivesses a copiar várias páginas do teu histórico de pontos.</p>
 
 
@@ -308,7 +308,7 @@ function calculadora_de_datas(){
     hora=Math.floor(((((num/(31*24*60))-mes)*31)-dia)*24)-1;
     min=Math.floor(((((((num/(31*24*60))-mes)*31)-dia)*24)-1-hora)*60-1);
     
-    document.getElementById("data").innerHTML = "dia:"+dia+"/"+mes+"/2020 -> hora:"+hora+":"+min;
+    document.getElementById("data").innerHTML = dia+"/"+mes+"/2020 "+hora+":"+min;
 }
 
 function obter_pps_comprados(){
@@ -460,7 +460,7 @@ function drawChartMadeira() {
                   title: 'Data'
                },
                vAxis: {
-                  title: 'Recurso'
+                  title: 'Custo em madeira'
                },   
                'width':550,
                'height':400,
@@ -488,7 +488,7 @@ function drawChartMadeiraRec() {
                   title: 'Data'
                },
                vAxis: {
-                  title: 'Recurso'
+                  title: 'Madeira gasta'
                },   
                'width':550,
                'height':400,
@@ -517,7 +517,7 @@ function drawChartArgila() {
                   title: 'Data'
                },
                vAxis: {
-                  title: 'Recurso'
+                  title: 'Custo em argila'
                },   
                'width':550,
                'height':400,
@@ -547,7 +547,7 @@ function drawChartArgilaRec() {
                   title: 'Data'
                },
                vAxis: {
-                  title: 'Recurso'
+                  title: 'Argila gasta'
                },   
                'width':550,
                'height':400,
@@ -576,7 +576,7 @@ function drawChartFerro() {
                   title: 'Data'
                },
                vAxis: {
-                  title: 'Recurso'
+                  title: 'Custo em ferro'
                },   
                'width':550,
                'height':400,
@@ -606,7 +606,7 @@ function drawChartFerroRec() {
                   title: 'Data'
                },
                vAxis: {
-                  title: 'Recurso'
+                  title: 'Ferro gasto'
                },   
                'width':550,
                'height':400,
