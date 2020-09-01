@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -63,24 +64,30 @@ body {
 	
 <div class="topnav">
   <ul>
-  <li><a class="active" href="/TWcalc/home.html">Home</a></li>
+  <li><a href="/TWcalc/home.html">Home</a></li>
   <li><a href="/TWcalc/calc20prod.html">Calculadora +20% Prod.</a></li>
-  <li><a href="/TWcalc/all_tools.html">Gráficos compra/venda PP's</a></li>
+  <li><a class="active" href="/TWcalc/all_tools.html">Gráficos compra/venda PP's</a></li>
   <li><a href="/TWcalc/bugs&contact.html">Bugs & Contacto</a></li>
   </ul> 
 </div>
 
 
 <div class="right-div">
-<p>Escolhe um mundo: </p>
+<p>Escolhe um mundo e carrega em 'Escolher mundo' para analisar um mundo específico ou deixa vazio para analisar todos os mundos: </p>
 <input type="text" id="myWorld" maxlenght="99999" placeholder="Exemplo:'74'">
+<button onclick="introduzir_mundo()">Escolher mundo</button>
 
 <p>Copia e cola as linhas COMPLETAS do teu historico de pontos ->meter aqui um exemplo>- </p>
 <input type="text" id="myText" maxlenght="99999" placeholder="Copia aqui uma linha">
-<button onclick="mainFunction()">Calcular custo dos PP's comprados</button>
+<button onclick="mainFunction()">Introduzir linhas</button>
 <p>Nota: para copiar as várias páginas do teu histórico de pontos: copia uma página, carrega em 'Calcular custo dos PP's comprados', apaga o que copiaste e agora já podes copiar outra página. </p>
 <p style="font-weight:bold">Para obteres gráficos mais completos, fala com os membros da tua tribo e pede-lhes o histórico de PPs deles; copia para aqui como se estivesses a copiar várias páginas do teu histórico de pontos.</p>
 
+
+<p>Linhas introduzidas:</p>
+<p id="input"></p>
+<p>Total pp's comprados:</p>
+<p id="total_pps"></p>
 <p>Total pp's usados:</p>
 <p id="total_pps_usados"></p>
 <p>Total gasto em madeira:</p>
@@ -143,6 +150,14 @@ var rec_gastos_mad=[];
 var rec_gastos_arg=[];
 var rec_gastos_fer=[];
 
+var mundo_escolhido=-1;
+
+function introduzir_mundo(){
+	//Obter mundo escolhido pelo utilizador
+  	mundo_escolhido = document.getElementById("myWorld").value;
+    
+}
+
 function obterMundo(linha_introduzida){
 	var mundo = linha_introduzida;
     
@@ -173,7 +188,7 @@ function obterLinhas(mundo_e){
             line = line.concat(input.substr(i, 1));
         }
         else{	
-        	if ( mundo_e==obterMundo(line) ){
+        	if ( obterMundo(line)==mundo_e ){
 				var pos_transf = line.indexOf("Transferir");
 			
     			if (pos_transf != -1 ){
@@ -188,10 +203,25 @@ function obterLinhas(mundo_e){
             	line_counter+=1;
             	line="";
             }
+            if (mundo_escolhido==-1){
+                var pos_transf = line.indexOf("Transferir");
+			
+    			if (pos_transf != -1 ){
+            		total_pps_comprados+=obter_pps_comprados();
+            	}
+            	var pos_ut = line.indexOf("Utilizados");
+
+    			if (pos_ut != -1 ){
+            		total_pps_usados+=obter_pps_usados();
+            	}
+            	lines[line_counter]=line;
+            	line_counter+=1;
+            	line="";
+            }
+            line="";
         }
     }
 }
-
 
 
 function obter_qtd_de_recurso_gasto(linha_sem_principio, prim_esp){
@@ -201,7 +231,6 @@ function obter_qtd_de_recurso_gasto(linha_sem_principio, prim_esp){
     	//Obter qtd de madeira gasta a comprar os pps
         qtd=linha_sem_principio.slice(linha_sem_principio.indexOf("(")+1, linha_sem_principio.length);
         total_gasto_em_madeira += parseInt(qtd);
-        document.getElementById("mundo_da_linha").innerHTML = total_gasto_em_madeira;
         tipo_de_recurso=1;
     }
     
@@ -293,7 +322,7 @@ function calculadora_de_datas(){
     mes=Math.floor(num/(31*24*60));
     dia=Math.floor(((num/(31*24*60))-mes)*31);
     hora=Math.floor(((((num/(31*24*60))-mes)*31)-dia)*24)-1;
-    min=Math.floor(((((((num/(31*24*60))-mes)*31)-dia)*24)-1-hora)*60-1);
+    min=Math.floor(((((((num/(31*24*60))-mes)*31)-dia)*24)-1-hora)*60);
     
     document.getElementById("data").innerHTML = dia+"/"+mes+"/2020 "+hora+":"+min;
 }
@@ -352,9 +381,6 @@ function obter_pps_usados(){
 
 function mainFunction() {
   var text;
-  
-  //Obter mundo escolhido pelo utilizador
-  var mundo_escolhido = document.getElementById("myWorld").value;
   
   obterLinhas(mundo_escolhido);
 
@@ -419,9 +445,6 @@ function mainFunction() {
     j-=1;
     rec_gastos_fer[j][2]=aux_arr[i];  
   }
-  
-  document.getElementById("pp").innerHTML = text;
-  document.getElementById("mundo_da_linha").innerHTML = teste;
   
   drawChartMadeira();
   drawChartArgila();
@@ -612,6 +635,3 @@ google.charts.setOnLoadCallback(drawChartFerroRec);
 <br><br><br><br><br><br><br><br>
 </body>
 </html>
-
-
-
