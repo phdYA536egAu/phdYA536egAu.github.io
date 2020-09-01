@@ -77,10 +77,9 @@ body {
 <input type="text" id="myWorld" maxlenght="99999" placeholder="Exemplo:'74'">
 <button onclick="introduzir_mundo()">Escolher mundo</button>
 
-<p>Copia e cola as linhas COMPLETAS do teu historico de pontos ->meter aqui um exemplo>- </p>
+<p>Copia e cola as linhas COMPLETAS do teu historico de pontos</p>
 <input type="text" id="myText" maxlenght="99999" placeholder="Copia aqui uma linha">
-<button onclick="mainFunction()">Introduzir linhas</button>
-<p>Nota: para copiar as várias páginas do teu histórico de pontos: copia uma página, carrega em 'Calcular custo dos PP's comprados', apaga o que copiaste e agora já podes copiar outra página. </p>
+<button onclick="mainFunction()">Introduzir linhas</button><div id="ajuda"></div>
 <p style="font-weight:bold">Para obteres gráficos mais completos, fala com os membros da tua tribo e pede-lhes o histórico de PPs deles; copia para aqui como se estivesses a copiar várias páginas do teu histórico de pontos.</p>
 
 
@@ -151,6 +150,10 @@ var rec_gastos_arg=[];
 var rec_gastos_fer=[];
 
 var mundo_escolhido=-1;
+	
+function obter_ajuda(){
+   var el = document.getElementById("ajuda")innerHTML="<img src="/TWcalc/Ajuda_TWcalc.png">";	
+}
 
 function introduzir_mundo(){
 	//Obter mundo escolhido pelo utilizador
