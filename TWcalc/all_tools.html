@@ -1,8 +1,11 @@
 
 <!DOCTYPE html>
+
 <html>
 
 <head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script type = "text/javascript" src = "https://www.gstatic.com/charts/loader.js">
 	</script>
 	<script type = "text/javascript">
@@ -79,7 +82,7 @@ body {
 
 <p>Copia e cola as linhas COMPLETAS do teu historico de pontos</p>
 <input type="text" id="myText" maxlenght="99999" placeholder="Copia aqui uma linha">
-<button onclick="mainFunction()">Introduzir linhas</button><div id="ajuda"></div>
+<button onclick="mainFunction()">Introduzir linhas</button><div id="ajuda"><a href="/ajuda.html" style="color:black">Ajuda</a></div>
 <p style="font-weight:bold">Para obteres gráficos mais completos, fala com os membros da tua tribo e pede-lhes o histórico de PPs deles; copia para aqui como se estivesses a copiar várias páginas do teu histórico de pontos.</p>
 
 
@@ -150,10 +153,6 @@ var rec_gastos_arg=[];
 var rec_gastos_fer=[];
 
 var mundo_escolhido=-1;
-	
-function obter_ajuda(){
-   var el = document.getElementById("ajuda")innerHTML="<img src="/TWcalc/Ajuda_TWcalc.png">";	
-}
 
 function introduzir_mundo(){
 	//Obter mundo escolhido pelo utilizador
