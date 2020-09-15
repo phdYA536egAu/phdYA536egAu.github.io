@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ddd;
+}
+
+.topnav ul {
+  margin: 0; 
+  padding: 16px; 
+  list-style-type: none; 
+  background-color: #333;
+  text-align:center;
+  overflow: hidden;
+}
+
+.topnav ul li{
+  display: inline;
+}
+
+.topnav ul li a {
+  color: #fff;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav ul li a:hover {
+  background-color: #ddd;
+  color: #000;
+}
+
+.topnav ul li a.active {
+  background-color: #000;
+  color: white;
+}
+.topnav ul li a.active:hover {
+  background-color: #ddd;
+  color: black;
+}
+ .left-div {
+  width: 600px; 
+  margin: auto;
+  padding-left:16px; 
+  padding-right:16px"
+}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <ul>
+  <li><a href="/index.html">Home</a></li>
+  <li><a class="active" href="/calc20prod.html">Calculadora +20% Prod.</a></li>
+  <li><a href="/all_tools.html">Gráficos compra/venda PP's</a></li>
+  <li><a href="/bugs&contact.html">Bugs & Contacto</a></li>
+  </ul> 
+</div>
+
+<div class="left-div">
+    <p>1.Insere o preco de um PP da unidade que queres gastar.</p>
+    <input type="text" id="preco_pp" maxlenght="100" placeholder="Preco do PP">
+    <p>(<a style="color:#000" href="phdya536egau.github.io/TWCalc/all_tools.html">Aqui</a> encontras uma ferramenta que te pode ajudar a prever o preco dos PPs a uma certa hora ou num certo dia)</p>
+
+
+	<p>2.Insere as unidades por hora geradas em 'Aumento da produção de recursos de 20%' da mina em que vais gastar os PP's (para encontrar carrega em 'Bosque' ou noutra mina) </p>
+	<input type="text" id="unidades_hora" maxlenght="100" placeholder="unidades/hora">
+
+	<p>3.Ao fim de uma semana, com o aumento de 20%, produzes mais</p>
+	<p id="_x7_x24"></p><p>&lt;unidades&gt;</p>
+	<button onclick="calcula_unidades_semana()">Calcular unidades geradas numa semana</button>
+
+	<p>3.Ao fim de um mes, com o aumento de 20%, produzes mais</p>
+	<p id="_x30_x24"></p><p>&lt;unidades&gt;</p>
+	<button onclick="calcula_unidades_mes()">Calcular unidades geradas num mes</button>
+    
+    <p>4. Com os pp's a este preço, compensa comprar PP's para depois gastar num aumento de 20% da produção da mina que inseriste em 2. ?</p>
+	<p id="boolean_compensa_sem">&lt;Compensa gastar num aumento de 20% de produção durante uma semana?&gt;</p>
+    <p id="boolean_compensa_mes">&lt;Compensa gastar num aumento de 20% de produção durante uma semana?&gt;</p>
+	<button onclick="boolean_compensa()">Compensa?</button>
+    <br><br><br><br><br><br><br>
+
+</div>   
+    <script>
+	function calcula_unidades_semana(){
+		var un_h=document.getElementById("unidades_hora").value;
+		x7_x24=parseInt(un_h)*7*24;
+    
+		document.getElementById("_x7_x24").innerHTML = x7_x24;
+	}
+
+	function calcula_unidades_mes(){
+		var un_h=document.getElementById("unidades_hora").value;
+		var x30_x24=parseInt(un_h)*30*24;
+    
+		document.getElementById("_x30_x24").innerHTML = x30_x24;
+	}
+    
+    function boolean_compensa(){
+    	var un_h=document.getElementById("unidades_hora").value;
+    	var un_sem=parseInt(un_h)*7*24;
+        var un_mes=parseInt(un_h)*30*24;
+        var preco_do_pp=document.getElementById("preco_pp").value;
+        
+        if ( parseInt(preco_do_pp)*40 < un_sem ){
+        	document.getElementById("boolean_compensa_sem").innerHTML = "Sim. Se comprares 40 PPs do recurso escolhido em 1. 40 PP's vão-te custar " + 40*parseInt(preco_do_pp) + " unidades mas produzes mais " + un_sem + "unidades do recurso escolhido em 2. numa semana. Vais ganhar " + (un_sem-40*parseInt(preco_do_pp)) + " unidades do recurso escolhido em 2. (depois podes trocar por outros recursos no mercado normal :) )";
+        }
+        else{
+        	document.getElementById("boolean_compensa_sem").innerHTML = "Não. Se comprares 40 PPs do recurso escolhido em 1. 40 PP's vão-te custar " + 40*parseInt(preco_do_pp) + " unidades mas só produzes mais " + un_sem + "unidades do recurso escolhido em 2. numa semana por tanto vais gastar " + (40*parseInt(preco_do_pp)-un_sem) + " unidades do recurso escolhido em 2. desnecessariamente.";
+        }
+        
+        if ( parseInt(preco_do_pp)*150 < un_mes ){
+        	document.getElementById("boolean_compensa_mes").innerHTML = "Sim. Se comprares 150 PPs do recurso escolhido em 1. 150 PP's vão-te custar " + 150*parseInt(preco_do_pp) + " unidades mas produzes mais " + un_mes + "unidades do recurso escolhido em 2. num mês. Vais ganhar " + (un_mes-150*parseInt(preco_do_pp)) + " unidades do recurso escolhido em 2. (depois podes trocar por outros recursos no mercado normal :) )";
+        }
+        else{
+        	document.getElementById("boolean_compensa_mes").innerHTML = "Não. Se comprares 150 PPs do recurso escolhido em 1. 150 PP's vão-te custar " + 150*parseInt(preco_do_pp) + " unidades mas só produzes mais " + un_mes + "unidades do recurso escolhido em 2. num mês por tanto vais gastar " + (150*parseInt(preco_do_pp)-un_mes) + " unidades do recurso escolhido em 2. desnecessariamente.";
+        }
+    }
+        
+	</script>
+
+  
+</body>
+</html>
