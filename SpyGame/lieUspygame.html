@@ -29,7 +29,7 @@
   <input type="radio" id="r1" name="rate" value="575 english words" checked="checked"> 575 english words
   <input type="radio" id="r2" name="rate" value="682 palavras em portugues" > 682 palavras em português 
 </div>
-<p id="nota1">Note: you have to press play after inserting the number of players and before pressing show card.</p>
+<p id="nota1">Note: you have to press play after inserting the number of players and before clicking show card.</p>
 <p id="nota2">Nota: tens de carregar no play depois de introduzir o numero de jogadores e antes de carregar em show card.</p>
 <p id="card"></p>
 <button onclick="show_card()">show card</button>
@@ -56,7 +56,7 @@ function play(){
 }
 
 function show_cards(){
-	var i, text="dlkmlkds:", rep_spies=1;
+	var i, rep_spies=1;
 	spy=Math.floor(Math.random() * num_players)+1;
 	document.getElementById("card").innerHTML = "Now each player has to click show card and hide card";
 	if (num_spies==2){
