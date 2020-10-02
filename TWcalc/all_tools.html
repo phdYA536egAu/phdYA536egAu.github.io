@@ -54,11 +54,24 @@ body {
 }
 
 .right-div {
-  width: 600px; 
+  width: 600px;
   margin: auto;
   padding-left:16px; 
   padding-right:16px"
 }
+
+.container {
+  width: 80%;
+  height: 200px;
+  background: aqua;
+  margin: auto;
+  padding: 10px;
+}
+
+.one {
+  float: left;
+}
+
 
 </style>
 </head>
@@ -98,6 +111,13 @@ body {
 <p style="color:orange; font-weight:bold;" id="total_argila"></p>
 <p>Total gasto em ferro:</p>
 <p style="color:darkgrey; font-weight:bold;" id="total_ferro"></p>
+<p>Nobres adicionais comprados com PPs:</p>
+<p id="num_nobres"></p>
+<p>PPs gastos a comprar nobres:</p>
+<p id="pps_gastos_nobres"></p>
+
+<p>PPs gastos a reduzir tempo de construcção:</p>
+<p id="pps_gastos_tempo_constr"></p>
 
 <p style="font-weight:bold;">Nota: o que são os números no eixo das abcissas?</p>
 <p>Estes números correspondem às data em que os pp's foram comprados.</p>
@@ -107,7 +127,6 @@ body {
 <button onclick="calculadora_de_datas()">Calcular data (Não usar vírgula nem ponto! )</button>
 <p>Data:</p>
 <p id="data">jun 17, 13:41</p>
-
 
 <div id = "chartMadeira" style = "width: 550px; height: 400px; margin: 0 auto">
 </div>
@@ -153,6 +172,10 @@ var rec_gastos_arg=[];
 var rec_gastos_fer=[];
 
 var mundo_escolhido=-1;
+
+var pps_gastos_em_nobres=0;
+var nobres_comprados_c_pps=0;
+var pps_gastos_em_tempo_constr=0;
 
 function introduzir_mundo(){
 	//Obter mundo escolhido pelo utilizador
@@ -373,9 +396,22 @@ function obter_pps_usados(){
     var pos_ut = line.indexOf("Utilizados");
 
     if (pos_ut != -1 ){
+    	if ( line.search("tempo") == -1 ){
+        	var tipo_de_utilizacao_de_pps = "Nobres";
+            nobres_comprados_c_pps++;
+        }
+        else{
+        	var tipo_de_utilizacao_de_pps = "tempo_construcao";
+        }
         var line_sem_principio = line.slice(pos_ut+10);
         var primeiro_espaco = line_sem_principio.lastIndexOf(" ");
         var pps_us = line_sem_principio.slice(0, line_sem_principio.length-primeiro_espaco+5); //nao deveria funcionar quando os novos pontos premium nao tem 3 digitos
+        if ( tipo_de_utilizacao_de_pps == "Nobres"){
+        	pps_gastos_em_nobres+=parseInt(pps_us);
+        }
+        if ( tipo_de_utilizacao_de_pps == "tempo_construcao"){
+			pps_gastos_em_tempo_constr+=parseInt(pps_us);
+        }
 
         return parseInt(pps_us); 
     } 
@@ -389,6 +425,7 @@ function mainFunction() {
   displayLines();
 
   document.getElementById("total_pps").innerHTML = total_pps_comprados;
+  total_pps_usados*=-1;
   document.getElementById("total_pps_usados").innerHTML = total_pps_usados;
 
   document.getElementById("total_madeira").innerHTML = total_gasto_em_madeira;   
@@ -454,6 +491,16 @@ function mainFunction() {
   drawChartMadeiraRec();
   drawChartArgilaRec();
   drawChartFerroRec();
+  
+  //pps usados em Nobres
+  pps_gastos_em_nobres*=-1;
+  document.getElementById("num_nobres").innerHTML = nobres_comprados_c_pps;
+  document.getElementById("pps_gastos_nobres").innerHTML = pps_gastos_em_nobres;
+  
+  //pps usados em reducao de tempo de construcao
+  pps_gastos_em_tempo_constr*=-1;
+  document.getElementById("pps_gastos_tempo_constr").innerHTML = pps_gastos_em_tempo_constr;
+  
 }
 
 //------CHARTS---------//
