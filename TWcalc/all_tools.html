@@ -177,6 +177,13 @@ var pps_gastos_em_nobres=0;
 var nobres_comprados_c_pps=0;
 var pps_gastos_em_tempo_constr=0;
 
+var sorted_precos_madeira=[];
+var sorted_precos_argila=[];
+var sorted_precos_ferro=[];
+var sorted_rec_gastos_mad=[];
+var sorted_rec_gastos_arg=[];
+var sorted_rec_gastos_fer=[];
+
 function introduzir_mundo(){
 	//Obter mundo escolhido pelo utilizador
   	mundo_escolhido = document.getElementById("myWorld").value;
@@ -485,6 +492,27 @@ function mainFunction() {
     rec_gastos_fer[j][2]=aux_arr[i];  
   }
   
+  //Sort nos arrays de cada recurso, de acordo com a data, para nao criar linhas estranhas
+  	sorted_precos_madeira = precos_madeira.sort(function(a, b) {
+  		return b[0] - a[0];
+	});
+	sorted_precos_argila = precos_argila.sort(function(a, b) {
+  		return b[0] - a[0];
+	});
+	sorted_precos_ferro = precos_ferro.sort(function(a, b) {
+  		return b[0] - a[0];
+	});
+    
+    sorted_rec_gastos_mad = rec_gastos_mad.sort(function(a, b) {
+  		return b[0] - a[0];
+	});
+    sorted_rec_gastos_arg = rec_gastos_arg.sort(function(a, b) {
+  		return b[0] - a[0];
+	});
+    sorted_rec_gastos_fer = rec_gastos_fer.sort(function(a, b) {
+  		return b[0] - a[0];
+	});
+  
   drawChartMadeira();
   drawChartArgila();
   drawChartFerro();
@@ -511,7 +539,7 @@ function drawChartMadeira() {
             data.addColumn('number', 'Madeira');
             data.addColumn('number', 'Ignore this');
             data.addColumn('number', 'Ignore this');
-            data.addRows(precos_madeira);
+            data.addRows(sorted_precos_madeira);
                
             // Set chart options
             var options = {'title' : 'Quanto custa comprar 1PP com madeira:',
@@ -539,7 +567,7 @@ function drawChartMadeiraRec() {
             data.addColumn('number', 'Madeira gasta numa certa data');
             data.addColumn('number', 'Total gasto até agora');
             data.addColumn('number', 'Ignore this');
-            data.addRows(rec_gastos_mad);
+            data.addRows(sorted_rec_gastos_mad);
                
             // Set chart options
             var options = {'title' : 'Quanto gastaste em madeira a comprar PPs:',
@@ -568,7 +596,7 @@ function drawChartArgila() {
             data_arg.addColumn('number', 'Argila');
             data_arg.addColumn('number', 'Ignore this');
             data_arg.addColumn('number', 'Ignore this');
-            data_arg.addRows(precos_argila);
+            data_arg.addRows(sorted_precos_argila);
                
             // Set chart options
             var options_arg = {'title' : 'Quanto custa comprar 1PP com argila:',
@@ -598,7 +626,7 @@ function drawChartArgilaRec() {
             data.addColumn('number', 'Argila gasta numa certa data');
             data.addColumn('number', 'Total gasto até agora');
             data.addColumn('number', 'Ignore this');
-            data.addRows(rec_gastos_arg);
+            data.addRows(sorted_rec_gastos_arg);
                
             // Set chart options
             var options = {'title' : 'Quanto gastaste em argila a comprar PPs:',
@@ -627,7 +655,7 @@ function drawChartFerro() {
             data_ferr.addColumn('number', 'Ferro');
             data_ferr.addColumn('number', 'Ignore this');
             data_ferr.addColumn('number', 'Ignore this');
-            data_ferr.addRows(precos_ferro);
+            data_ferr.addRows(sorted_precos_ferro);
                
             // Set chart options
             var options_ferr = {'title' : 'Quanto custa comprar 1PP com ferro:',
@@ -657,7 +685,7 @@ function drawChartFerroRec() {
             data.addColumn('number', 'Ferro gasto numa certa data');
             data.addColumn('number', 'Total gasto até agora');
             data.addColumn('number', 'Ignore this');
-            data.addRows(rec_gastos_fer);
+            data.addRows(sorted_rec_gastos_fer);
                
             // Set chart options
             var options = {'title' : 'Quanto gastaste em ferro a comprar PPs:',
