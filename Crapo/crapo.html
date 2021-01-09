@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Crapo</title>
+</head>
+<body>
+<h1>Jogo do Crapô</h1>
+<p>Regras:</p>
+
+<p>    Jogado por dois participantes, utilizando-se dois baralhos de 52 cartas;
+    Inicialmente misturam-se os dois baralhos e distribuem-se as cartas, uma a uma pelos dois jogadores;<br>
+    Cada um deve voltar a baralhar as cartas, “parti-las” e formar o seu monte crapô que é constituído por treze cartas;<br>
+    A última carta fica virada para cima;<br>
+    O jogador que tiver a carta mais baixa, sobre o crapô, inicia o jogo;<br>
+    No caso de as cartas terem o mesmo valor, a décima quarta carta vai decidir quem começa;<br>
+    De seguida, coloca-se essa carta no meio do monte;<br>
+    O monte do crapô será colocado à esquerda, enquanto o monte principal ficará à frente do jogador;<br>
+    A partir deste momento, cada um dos montes passa a ser designado, respectivamente, de crapô e monte;<br>
+    De seguida, cada um dos jogadores coloca quatro cartas sobre a mesa, à sua esquerda e alinhadas na vertical, formando desta forma duas colunas laterais e paralelas entre si;<br>
+    Entre essas duas colunas deve ficar um espaço (de duas cartas), onde vão ficar as pilhas dos Ases, que são 8 na totalidade;<br>
+    As cartas só podem entrar no jogo exposto, ou seja, nas colunas, em sequência descendente de cor de naipe alternada;<br>
+    As cartas devem ser dispostas de forma a que a carta que fique por cima cubra apenas metade da carta anterior;<br>
+    As pilhas dos Ases têm como base um Ás e sobre qualquer um desses Ases pode colocar-se um 2, depois um 3 e assim sucessivamente até ao rei, mas sempre do mesmo naipe;<br>
+    Estas cartas não poderão ser removidas até ao final do jogo;
+    Não é obrigatório colocar na mesa uma carta que tenha entrado no jogo exposto;<br>
+    Primeiro utilizam-se as cartas do monte crapô e só depois destas se esgotarem é que se podem utilizar as do monte reverso, para preencher as casas vazias;<br>
+    As cartas das extremidades podem deslocar-se para as casas abertas, ou para outras filas desde que se forme uma sequência descendente de cor diferente;<br>
+    Quando se abre uma casa pode manipular-se um par de cartas expostas;<br>
+    Carrega-se, batendo o monte reverso ou o crapô do adversário com uma carta do mesmo naipe imediatamente inferior ou superior à carta exposta que se bate;<br>
+    Um crapô só pode ser carregado se o jogador a quem pertence já o tiver utilizado;<br>
+    Só se houver uma casa aberta é que podem entrar cartas para a mesa, excepto se for um Ás ou se se tratar de uma carta que entre na sequência dos montes dos Ases;<br>
+    Antes de cada jogada, o jogador pode mover a carta destapada do seu monte;
+    Quando as cartas do monte acabam, volta-se o monte reverso e o processo inicial recomeça;<br>
+    O jogo termina quando um dos jogadores ficar sem cartas ou quando ambos decidirem que o jogo está empatado. </p><br>
+<p id="game"></p>
+<script>
+// declare card elements
+const suits = ["Co", "Es", "Or", "Pa" ];
+const values = [
+  "_As",
+  "__2",
+  "__3",
+  "__",
+  "__5",
+  "__6",
+  "__7",
+  "__8",
+  "__9",
+  "_10",
+  "Val",
+  "Dam",
+  "Rei",
+];
+
+// empty array to contain cards
+let deck = [];
+
+// create a deck consisting of two regular decks of cards
+for (let i = 0; i < suits.length; i++) {
+    for (let x = 0; x < values.length; x++) {
+        let card = { Value: values[x], Suit: suits[i] };
+        deck.push(card);
+    }
+}
+for (let i = 0; i < suits.length; i++) {
+    for (let x = 0; x < values.length; x++) {
+        let card = { Value: values[x], Suit: suits[i] };
+        deck.push(card);
+    }
+}
+
+// shuffle the cards
+for (let i = deck.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * i);
+    let temp = deck[i];
+    deck[i] = deck[j];
+    deck[j] = temp;
+}
+
+// create crapo1 and 2
+crapo1=[]
+crapo2=[]
+
+//display card deck
+for (let i = 0; i < 13; i++){
+	crapo1.push(deck.pop())
+    crapo2.push(deck.pop())
+}
+game=""
+//game+=" " + crapo1[i].Value + " " + crapo1[i].Suit + " <br>"
+document.getElementById("game").innerHTML = crapo1[0].Value+" " +crapo1[0].Suit
+
+// display game "board"
+
+game=""
+
+game+="|crapo|open |down |<br>"
+game+="|"+crapo1[0].Value+crapo1[0].Suit+"|------|------|<br>"
+game+="<br>"
+game+="|     |     |     |     |<br>"
+game+="|     |     |     |     |<br>"
+game+="|     |     |     |     |<br>"
+game+="|     |     |     |     |<br>"
+game+="<br>"
+game+="|------|------|"+crapo2[0].Value+crapo2[0].Suit+"|<br>"
+game+="|down |open |crapo|<br>"
+document.getElementById("game").innerHTML = game
+
+</script>
+</body>
+</html>
+
