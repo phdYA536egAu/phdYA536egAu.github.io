@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type = "text/javascript" src = "https://www.gstatic.com/charts/loader.js">
+	</script>
+	<script type = "text/javascript">
+		google.charts.load('current', {packages: ['corechart','line']});  
+	</script>  
+    
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ddd;
+}
+
+.topnav ul {
+  margin: 0; 
+  padding: 16px; 
+  list-style-type: none; 
+  background-color: #333;
+  text-align:center;
+  overflow: hidden;
+}
+
+.topnav ul li{
+  display: inline;
+}
+
+.topnav ul li a {
+  color: #fff;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav ul li a:hover {
+  background-color: #ddd;
+  color: #000;
+}
+
+.topnav ul li a.active {
+  background-color: #000;
+  color: white;
+}
+.topnav ul li a.active:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.text-div {
+  width: 600px;
+  margin: auto;
+  padding-left:16px; 
+  padding-right:16px"
+}
+.footer {
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #ddd;
+   color: black;
+   text-align: center;
+}
+</style>
+</head>
+
+<body>
+<div class="topnav">
+  <ul>
+  <li><a href="/index_en.html">Home</a></li>
+  <li><a href="/calc20prod_en.html">Calculadora +20% Prod.</a></li>
+  <li><a class="active" href="/all_tools_en.html">Gráficos compra/venda PP's</a></li>
+  <li><a href="/bugs_contact_en.html">Apoio</a></li>
+  <li><a href="/all_tools.html"><img border="0" alt="PT" src="lang_pt.png" width="50" height="30"></a></li>
+  <li><a href="/all_tools_en.html"><img border="0" alt="EN" src="lang_en.png" width="50" height="30"></a></li>
+  </ul> 
+</div>
+    <div style="width: 100%; display: table;">
+        <div style="display: table-row;">
+            <div style="width: 50%; float: left; margin: 20px; display: table-cell;">
+            <div style="width: 550px;">
+            <p>Escolhe um mundo e carrega em 'Escolher mundo' para analisar um mundo específico ou deixa vazio para analisar todos os mundos: </p>
+<input type="text" id="myWorld" maxlenght="99999" placeholder="Exemplo:'74'">
+<button onclick="introduzir_mundo()">Escolher mundo</button>
+
+<p>Copia e cola as linhas COMPLETAS do teu historico de pontos</p>
+<input type="text" id="myText" maxlenght="99999" placeholder="Copia aqui uma linha">
+<button onclick="mainFunction()">Introduzir linhas</button><div id="ajuda"><a href="/ajuda.html" style="color:black">Ajuda</a></div>
+<p style="font-weight:bold">Para obteres gráficos mais completos, fala com os membros da tua tribo e pede-lhes o histórico de PPs deles; copia para aqui como se estivesses a copiar várias páginas do teu histórico de pontos.</p>
+
+
+<p>Linhas introduzidas:</p>
+<p id="input"></p>
+<p>Total pp's comprados:</p>
+<p id="total_pps"></p>
+<p>Total pp's usados:</p>
+<p id="total_pps_usados"></p>
+<p>Total gasto em madeira:</p>
+<p style="color:brown; font-weight:bold;" id="total_madeira"></p>
+<p >Total gasto em argila:</p>
+<p style="color:orange; font-weight:bold;" id="total_argila"></p>
+<p>Total gasto em ferro:</p>
+<p style="color:darkgrey; font-weight:bold;" id="total_ferro"></p>
+<p>Nobres adicionais comprados com PPs:</p>
+<p id="num_nobres"></p>
+<p>PPs gastos a comprar nobres:</p>
+<p id="pps_gastos_nobres"></p>
+
+<p>PPs gastos a reduzir tempo de construcção:</p>
+<p id="pps_gastos_tempo_constr"></p>
+
+<p style="font-weight:bold;">Nota: o que são os números no eixo das abcissas?</p>
+<p>Estes números correspondem às data em que os pp's foram comprados.</p>
+<p>Exemplo: 295,222 corresponde à data jun 17, 13:41</p>
+<p>Calculadora de datas</p>
+<input type="text" id="Data_a_calcular" maxlenght="99999" value="295222">
+<button onclick="calculadora_de_datas()">Calcular data (Não usar vírgula nem ponto! )</button>
+<p>Data:</p>
+<p id="data">jun 17, 13:41</p>
+<br><br><br><p style="width: 400px; float:center;">"If you know the enemy and know yourself, you need not fear the result of a hundred battles. If you know yourself but not the enemy, for every victory gained you will also suffer a defeat. If you know neither the enemy nor yourself, you will succumb in every battle."</p> - Sun Tzu in The Art of War
+<br><br><br><br><p style="width: 400px; float:center;">"It's unbelievable how much you don't know about the game you have been playing all your life"</p> - Mickey Mantle in Moneyball 
+<br><br><br><br><p style="width: 400px; float:center;">"The old saying is that ‘figures will not lie,’ but a new saying is ‘liars will figure’"</p> - 1889, Carroll D. Wright (a prominent statistician)
+<br><br><br><br><p style="width: 400px; float:center;">"The point is, ladies and gentlemen, that greed, for lack of a better word, is good. Greed is right. Greed works. Greed clarifies, cuts through, and captures the essence of the evolutionary spirit. Greed, in all of its forms, greed for life, for money, for love, knowledge, has marked the upward surge in mankind and greed, you mark my words, will not only save Teldar paper, but that other malfunctioning corporation called the USA. Thank you very much."</p> - Gordon Gekko in Wall Street
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            </div>
+            </div>
+            <div style="display: table-cell; margin-left:50%"> 
+                <div id = "chartMadeira" style = "width: 550px; height: 400px; margin: 0 auto"></div>
+				<div id = "chartArgila" style = "width: 550px; height: 400px; margin: 0 auto"></div>
+				<div id = "chartFerro" style = "width: 550px; height: 400px; margin: 0 auto"></div>
+
+				<div id = "chartMadeiraRec" style = "width: 550px; height: 400px; margin: 0 auto"></div>
+				<div id = "chartArgilaRec" style = "width: 550px; height: 400px; margin: 0 auto"></div>
+				<div id = "chartFerroRec" style = "width: 550px; height: 400px; margin: 0 auto"></div>
+            </div>
+        </div>
+    </div>
+
+<script>
+var lines = [];
+var linesLength;
+
+var text, i, bool;
+var line="";
+var line_counter=0;
+
+var total_pps_comprados=0;
+var total_pps_usados=0;
+
+var total_gasto_em_madeira=0;
+var total_gasto_em_argila=0;
+var total_gasto_em_ferro=0;
+var tot_g_mad=[];
+var tot_g_arg=[];
+var tot_g_fer=[];
+
+var precos_madeira=[];
+var precos_argila=[];
+var precos_ferro=[];
+var madeira_cont=0;
+var argila_cont=0;
+var ferro_cont=0;
+
+var rec_gastos_mad=[];
+var rec_gastos_arg=[];
+var rec_gastos_fer=[];
+
+var mundo_escolhido=-1;
+
+var pps_gastos_em_nobres=0;
+var nobres_comprados_c_pps=0;
+var pps_gastos_em_tempo_constr=0;
+
+var sorted_precos_madeira=[];
+var sorted_precos_argila=[];
+var sorted_precos_ferro=[];
+var sorted_rec_gastos_mad=[];
+var sorted_rec_gastos_arg=[];
+var sorted_rec_gastos_fer=[];
+
+function introduzir_mundo(){
+	//Obter mundo escolhido pelo utilizador
+  	mundo_escolhido = document.getElementById("myWorld").value;
+    
+}
+
+function obterMundo(linha_introduzida){
+	var mundo = linha_introduzida;
+    
+    mundo = mundo.slice(mundo.indexOf("M")+6, mundo.indexOf("M")+8);
+    
+    return mundo;
+}
+
+function displayLines(){
+  linesLength = lines.length;
+
+  text = "<ul>";
+  for (i = 0; i < linesLength; i++) {
+       text += "<li>" + lines[i] + "</li>";
+  }
+  text += "</ul>";
+
+  document.getElementById("input").innerHTML = text;
+
+}
+
+function obterLinhas(mundo_e){
+    var input = document.getElementById("myText").value;
+
+    for (i = 0; i < input.length; i++) {
+        bool=input.substr(i, 1).localeCompare(")");
+        if ( bool ){
+            line = line.concat(input.substr(i, 1));
+        }
+        else{	
+        	if ( obterMundo(line)==mundo_e ){
+				var pos_transf = line.indexOf("Transferir");
+			
+    			if (pos_transf != -1 ){
+            		total_pps_comprados+=obter_pps_comprados();
+            	}
+            	var pos_ut = line.indexOf("Utilizados");
+
+    			if (pos_ut != -1 ){
+            		total_pps_usados+=obter_pps_usados();
+            	}
+            	lines[line_counter]=line;
+            	line_counter+=1;
+            	line="";
+            }
+            if (mundo_escolhido==-1){
+                var pos_transf = line.indexOf("Transferir");
+			
+    			if (pos_transf != -1 ){
+            		total_pps_comprados+=obter_pps_comprados();
+            	}
+            	var pos_ut = line.indexOf("Utilizados");
+
+    			if (pos_ut != -1 ){
+            		total_pps_usados+=obter_pps_usados();
+            	}
+            	lines[line_counter]=line;
+            	line_counter+=1;
+            	line="";
+            }
+            line="";
+        }
+    }
+}
+
+
+function obter_qtd_de_recurso_gasto(linha_sem_principio, prim_esp){
+	var qtd="";
+    var tipo_de_recurso;
+	if ( linha_sem_principio.search("Madeira") != -1 ){
+    	//Obter qtd de madeira gasta a comprar os pps
+        qtd=linha_sem_principio.slice(linha_sem_principio.indexOf("(")+1, linha_sem_principio.length);
+        total_gasto_em_madeira += parseInt(qtd);
+        tipo_de_recurso=1;
+    }
+    
+    if ( linha_sem_principio.search("Argila") != -1 ){
+    	//Obter qtd de argila gasta a comprar os pps
+        qtd=linha_sem_principio.slice(linha_sem_principio.indexOf("(")+1, linha_sem_principio.length);
+        total_gasto_em_argila += parseInt(qtd);
+        tipo_de_recurso=2;
+    }
+
+	if ( linha_sem_principio.search("Ferro") != -1 ){
+    	//Obter qtd de ferro gasto a comprar os pps
+        qtd=linha_sem_principio.slice(linha_sem_principio.indexOf("(")+1, linha_sem_principio.length);
+        total_gasto_em_ferro += parseInt(qtd);
+        tipo_de_recurso=3;
+    }
+    
+    return [parseInt(qtd), tipo_de_recurso];
+}
+
+function obter_valor_da_data(data_str){
+	var mes_str;
+    var mes_num;
+    var dia_str;
+    var hora_str;
+    var min_str;
+    
+	//Obter mes
+    mes_str = data_str.slice(2, 5);
+    
+    //Transformar mes(string) num numero
+    switch(mes_str){
+    	case "jan":
+        	mes_num=1;
+            break;
+        case "fev":
+        	mes_num=2;
+            break;
+        case "mar":
+        	mes_num=3;
+            break;
+        case "abr":
+        	mes_num=4;
+            break;
+        case "mai":
+        	mes_num=5;
+            break;
+        case "jun":
+        	mes_num=6;
+            break;
+        case "jul":
+        	mes_num=7;
+            break;
+        case "ago":
+        	mes_num=8;
+            break;
+        case "set":
+        	mes_num=9;
+            break;
+        case "out":
+        	mes_num=10;
+            break;
+        case "nov":
+        	mes_num=11;
+            break;
+        case "dez":
+        	mes_num=12;
+    }
+    
+	//Obter dia
+    dia_str=data_str.slice(data_str.indexOf(",")-3, data_str.indexOf(","));
+ 
+    //Obter hora
+    hora_str=data_str.slice(data_str.indexOf(",")+1, data_str.indexOf(":"));
+    
+    //Obter min
+    min_str=data_str.slice(data_str.indexOf(":")+1, data_str.indexOf("M"));
+    
+    return 2020+mes_num*31*24*60+parseInt(dia_str)*24*60+(parseInt(hora_str)+1)*60+(parseInt(min_str)+1);
+    
+}
+function calculadora_de_datas(){
+	var num = document.getElementById("Data_a_calcular").value;
+    
+    num = parseInt(num) - 2020;
+    
+    var mes,dia,hora,min;
+    
+    mes=Math.floor(num/(31*24*60));
+    dia=Math.floor(((num/(31*24*60))-mes)*31);
+    hora=Math.floor(((((num/(31*24*60))-mes)*31)-dia)*24)-1;
+    min=Math.floor(((((((num/(31*24*60))-mes)*31)-dia)*24)-1-hora)*60);
+    
+    document.getElementById("data").innerHTML = dia+"/"+mes+"/2020 "+hora+":"+min;
+}
+
+function obter_pps_comprados(){
+    var pos_transf = line.indexOf("Transferir");
+    var qtd_e_tiporecurso;
+    var data;
+    var valor;
+
+    if (pos_transf != -1 ){
+    	data = line.slice(0, line.indexOf("M"));
+        valor = obter_valor_da_data(data);
+    
+        var line_sem_principio = line.slice(pos_transf+10);
+        var primeiro_espaco = line_sem_principio.lastIndexOf(" ");
+       
+        qtd_e_tiporecurso = obter_qtd_de_recurso_gasto(line_sem_principio, primeiro_espaco);
+               
+        var pps_comprados = line_sem_principio.slice(0, line_sem_principio.length-primeiro_espaco+1);
+        
+        switch (qtd_e_tiporecurso[1]){
+        	case 1:
+            	precos_madeira[madeira_cont]=[valor, parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados), , ,];
+                rec_gastos_mad[madeira_cont]=[valor, qtd_e_tiporecurso[0], , ,];
+                tot_g_mad[madeira_cont]=qtd_e_tiporecurso[0];
+                madeira_cont+=1;
+        		break;
+            case 2:
+            	precos_argila[argila_cont]=[valor, parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados), , ,];
+                rec_gastos_arg[argila_cont]=[valor, qtd_e_tiporecurso[0], , ,];
+                tot_g_arg[argila_cont]=qtd_e_tiporecurso[0];
+                argila_cont+=1;
+        		break;
+            case 3:
+            	precos_ferro[ferro_cont]=[valor, parseInt(qtd_e_tiporecurso[0])/parseInt(pps_comprados), , ,];
+                rec_gastos_fer[ferro_cont]=[valor, qtd_e_tiporecurso[0], , ,];
+                tot_g_fer[ferro_cont]=qtd_e_tiporecurso[0];
+                ferro_cont+=1;
+        }
+        return parseInt(pps_comprados);  
+    }
+}
+
+function obter_pps_usados(){
+    var pos_ut = line.indexOf("Utilizados");
+
+    if (pos_ut != -1 ){
+    	if ( line.search("tempo") == -1 ){
+        	var tipo_de_utilizacao_de_pps = "Nobres";
+            nobres_comprados_c_pps++;
+        }
+        else{
+        	var tipo_de_utilizacao_de_pps = "tempo_construcao";
+        }
+        var line_sem_principio = line.slice(pos_ut+10);
+        var primeiro_espaco = line_sem_principio.lastIndexOf(" ");
+        var pps_us = line_sem_principio.slice(0, line_sem_principio.length-primeiro_espaco+5); //nao deveria funcionar quando os novos pontos premium nao tem 3 digitos
+        if ( tipo_de_utilizacao_de_pps == "Nobres"){
+        	pps_gastos_em_nobres+=parseInt(pps_us);
+        }
+        if ( tipo_de_utilizacao_de_pps == "tempo_construcao"){
+			pps_gastos_em_tempo_constr+=parseInt(pps_us);
+        }
+
+        return parseInt(pps_us); 
+    } 
+}
+
+function mainFunction() {
+  var text;
+  
+  obterLinhas(mundo_escolhido);
+
+  displayLines();
+
+  document.getElementById("total_pps").innerHTML = total_pps_comprados;
+  total_pps_usados*=-1;
+  document.getElementById("total_pps_usados").innerHTML = total_pps_usados;
+
+  document.getElementById("total_madeira").innerHTML = total_gasto_em_madeira;   
+  document.getElementById("total_argila").innerHTML = total_gasto_em_argila;
+  document.getElementById("total_ferro").innerHTML = total_gasto_em_ferro;
+  
+  //prints e loops necessarios para graficos de recurso gasto
+  //MADEIRA
+  text = "<ul>";
+  var aux_arr=[];
+  var j=precos_madeira.length;
+  for (i = 0; i < precos_madeira.length; i++) {
+  	text += '<li>' + precos_madeira[i][0] + ":::" + precos_madeira[i][1] + "--" + precos_madeira[i][2] + "--" + precos_madeira[i][3] + "--" + precos_madeira[i][4]+"ççç"+tot_g_mad[i]+"</li>";
+    
+    j-=1;
+   	aux_arr[i]=tot_g_mad[j];
+  }
+  text += "</ul>";
+  
+  var teste="";
+  j=precos_madeira.length;
+  for (i=0; i<precos_madeira.length; i++){
+  	if (i>0){ aux_arr[i] += aux_arr[i-1]; }
+    j-=1;
+    rec_gastos_mad[j][2]=aux_arr[i]; 
+  	
+    teste += aux_arr[i] + ";";  
+  }
+  
+  //ARGILA
+  aux_ar=[];
+  j=precos_argila.length;
+  for(i=0; i < precos_argila.length; i++){
+  	j-=1;
+    aux_arr[i]=tot_g_arg[j];
+  }
+  
+  j=precos_argila.length;
+  for (i=0; i<precos_argila.length; i++){
+  	if (i>0){ aux_arr[i] += aux_arr[i-1]; }
+    j-=1;
+    rec_gastos_arg[j][2]=aux_arr[i];  
+  }
+  
+  //FERRO
+  aux_ar=[];
+  j=precos_ferro.length;
+  for(i=0; i < precos_ferro.length; i++){
+  	j-=1;
+    aux_arr[i]=tot_g_fer[j];
+  }
+  
+  j=precos_ferro.length;
+  for (i=0; i<precos_ferro.length; i++){
+  	if (i>0){ aux_arr[i] += aux_arr[i-1]; }
+    j-=1;
+    rec_gastos_fer[j][2]=aux_arr[i];  
+  }
+  
+  //Sort nos arrays de cada recurso, de acordo com a data, para nao criar linhas estranhas
+  	sorted_precos_madeira = precos_madeira.sort(function(a, b) {
+  		return b[0] - a[0];
+	});
+	sorted_precos_argila = precos_argila.sort(function(a, b) {
+  		return b[0] - a[0];
+	});
+	sorted_precos_ferro = precos_ferro.sort(function(a, b) {
+  		return b[0] - a[0];
+	});
+    
+    sorted_rec_gastos_mad = rec_gastos_mad.sort(function(a, b) {
+  		return b[0] - a[0];
+	});
+    sorted_rec_gastos_arg = rec_gastos_arg.sort(function(a, b) {
+  		return b[0] - a[0];
+	});
+    sorted_rec_gastos_fer = rec_gastos_fer.sort(function(a, b) {
+  		return b[0] - a[0];
+	});
+  
+  drawChartMadeira();
+  drawChartArgila();
+  drawChartFerro();
+  drawChartMadeiraRec();
+  drawChartArgilaRec();
+  drawChartFerroRec();
+  
+  //pps usados em Nobres
+  pps_gastos_em_nobres*=-1;
+  document.getElementById("num_nobres").innerHTML = nobres_comprados_c_pps;
+  document.getElementById("pps_gastos_nobres").innerHTML = pps_gastos_em_nobres;
+  
+  //pps usados em reducao de tempo de construcao
+  pps_gastos_em_tempo_constr*=-1;
+  document.getElementById("pps_gastos_tempo_constr").innerHTML = pps_gastos_em_tempo_constr;
+  
+}
+
+//------CHARTS---------//
+function drawChartMadeira() {
+            // Define the chart to be drawn.
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'String');
+            data.addColumn('number', 'Madeira');
+            data.addColumn('number', 'Ignore this');
+            data.addColumn('number', 'Ignore this');
+            data.addRows(sorted_precos_madeira);
+               
+            // Set chart options
+            var options = {'title' : 'Quanto custa comprar 1PP com madeira:',
+               hAxis: {
+                  title: 'Data'
+               },
+               vAxis: {
+                  title: 'Custo em madeira'
+               },   
+               'width':550,
+               'height':400,
+               colors:['brown'],
+               pointsVisible: true	  
+            };
+
+            // Instantiate and draw the chart.
+            var chart = new google.visualization.LineChart(document.getElementById('chartMadeira'));
+            chart.draw(data, options);
+         }
+         google.charts.setOnLoadCallback(drawChartMadeira);
+function drawChartMadeiraRec() {
+            // Define the chart to be drawn.
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'String');
+            data.addColumn('number', 'Madeira gasta numa certa data');
+            data.addColumn('number', 'Total gasto até agora');
+            data.addColumn('number', 'Ignore this');
+            data.addRows(sorted_rec_gastos_mad);
+               
+            // Set chart options
+            var options = {'title' : 'Quanto gastaste em madeira a comprar PPs:',
+               hAxis: {
+                  title: 'Data'
+               },
+               vAxis: {
+                  title: 'Madeira gasta'
+               },   
+               'width':550,
+               'height':400,
+               colors:['brown', 'black'],
+               pointsVisible: true	  
+            };
+
+            // Instantiate and draw the chart.
+            var chart = new google.visualization.LineChart(document.getElementById('chartMadeiraRec'));
+            chart.draw(data, options);
+         }
+google.charts.setOnLoadCallback(drawChartMadeiraRec);         
+         
+function drawChartArgila() {
+            // Define the chart to be drawn.
+            var data_arg = new google.visualization.DataTable();
+            data_arg.addColumn('number', 'String');
+            data_arg.addColumn('number', 'Argila');
+            data_arg.addColumn('number', 'Ignore this');
+            data_arg.addColumn('number', 'Ignore this');
+            data_arg.addRows(sorted_precos_argila);
+               
+            // Set chart options
+            var options_arg = {'title' : 'Quanto custa comprar 1PP com argila:',
+               hAxis: {
+                  title: 'Data'
+               },
+               vAxis: {
+                  title: 'Custo em argila'
+               },   
+               'width':550,
+               'height':400,
+               colors:['yellow'],
+               pointsVisible: true	  
+            };
+
+            // Instantiate and draw the chart.
+            var chart_arg = new google.visualization.LineChart(document.getElementById('chartArgila'));
+            chart_arg.draw(data_arg, options_arg);
+}
+
+google.charts.setOnLoadCallback(drawChartArgila);
+
+function drawChartArgilaRec() {
+            // Define the chart to be drawn.
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'String');
+            data.addColumn('number', 'Argila gasta numa certa data');
+            data.addColumn('number', 'Total gasto até agora');
+            data.addColumn('number', 'Ignore this');
+            data.addRows(sorted_rec_gastos_arg);
+               
+            // Set chart options
+            var options = {'title' : 'Quanto gastaste em argila a comprar PPs:',
+               hAxis: {
+                  title: 'Data'
+               },
+               vAxis: {
+                  title: 'Argila gasta'
+               },   
+               'width':550,
+               'height':400,
+               colors:['yellow', 'black'],
+               pointsVisible: true	  
+            };
+
+            // Instantiate and draw the chart.
+            var chart = new google.visualization.LineChart(document.getElementById('chartArgilaRec'));
+            chart.draw(data, options);
+         }
+google.charts.setOnLoadCallback(drawChartArgilaRec);
+
+function drawChartFerro() {
+            // Define the chart to be drawn.
+            var data_ferr = new google.visualization.DataTable();
+            data_ferr.addColumn('number', 'String');
+            data_ferr.addColumn('number', 'Ferro');
+            data_ferr.addColumn('number', 'Ignore this');
+            data_ferr.addColumn('number', 'Ignore this');
+            data_ferr.addRows(sorted_precos_ferro);
+               
+            // Set chart options
+            var options_ferr = {'title' : 'Quanto custa comprar 1PP com ferro:',
+               hAxis: {
+                  title: 'Data'
+               },
+               vAxis: {
+                  title: 'Custo em ferro'
+               },   
+               'width':550,
+               'height':400,
+               colors:['blue'],
+               pointsVisible: true	  
+            };
+
+            // Instantiate and draw the chart.
+            var chart_ferr = new google.visualization.LineChart(document.getElementById('chartFerro'));
+            chart_ferr.draw(data_ferr, options_ferr);
+}
+
+google.charts.setOnLoadCallback(drawChartFerro);
+
+function drawChartFerroRec() {
+            // Define the chart to be drawn.
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'String');
+            data.addColumn('number', 'Ferro gasto numa certa data');
+            data.addColumn('number', 'Total gasto até agora');
+            data.addColumn('number', 'Ignore this');
+            data.addRows(sorted_rec_gastos_fer);
+               
+            // Set chart options
+            var options = {'title' : 'Quanto gastaste em ferro a comprar PPs:',
+               hAxis: {
+                  title: 'Data'
+               },
+               vAxis: {
+                  title: 'Ferro gasto'
+               },   
+               'width':550,
+               'height':400,
+               colors:['blue', 'black'],
+               pointsVisible: true	  
+            };
+
+            // Instantiate and draw the chart.
+            var chart = new google.visualization.LineChart(document.getElementById('chartFerroRec'));
+            chart.draw(data, options);
+         }
+google.charts.setOnLoadCallback(drawChartFerroRec); 
+</script>
+
+
+<br><br>
+<div class="footer">
+  <p>©PONTOGAMING.PT 2021</p>
+</div>
+</body>
+</html>
