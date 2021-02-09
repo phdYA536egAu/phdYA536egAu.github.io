@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ddd;
+}
+
+.topnav ul {
+  margin: 0; 
+  padding: 16px; 
+  list-style-type: none; 
+  background-color: #333;
+  text-align:center;
+  overflow: hidden;
+}
+
+.topnav ul li{
+  display: inline;
+}
+
+.topnav ul li a {
+  color: #fff;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav ul li a:hover {
+  background-color: #ddd;
+  color: #000;
+}
+
+.topnav ul li a.active {
+  background-color: #000;
+  color: white;
+}
+.topnav ul li a.active:hover {
+  background-color: #ddd;
+  color: black;
+}
+ .left-div {
+  width: 600px; 
+  margin: auto;
+  padding-left:16px; 
+  padding-right:16px;
+}
+.footer {
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #ddd;
+   color: black;
+   text-align: center;
+}
+
+</style>
+</head>
+<body>
+
+  <div class="topnav">
+    <ul>
+      <li><a class="active" href="/index.html">Home</a></li>
+      <li><a href="/calc20prod.html">Calculator +20% Prod.</a></li>
+      <li><a href="/all_tools.html">PPs buying/selling graphs</a></li>
+      <li><a href="/bugs_contact.html">Support</a></li>
+      <li><a href="/calc20prod.html"><img border="0" alt="PT" src="lang_pt.png" width="50" height="30"></a></li>
+      <li><a href="/calc20prod_en.html"><img border="0" alt="EN" src="lang_en.png" width="50" height="30"></a></li>
+    </ul> 
+  </div>
+
+<div class="left-div">
+    <p>1. Insert the price of a PP of the resource you want to spend</p>
+    <input type="text" id="preco_pp" maxlenght="100" placeholder="Preco do PP">
+    <p>(<a style="color:#000" href="phdya536egau.github.io/TWCalc/all_tools.html">Here</a> you will find a tool that can help you predict the price of PPs at a certain time or on a certain day )</p>
+
+
+	<p>2. Insert the units per hour generated in 'Increase in resource production by 20%' of the mine where you will spend the PP's (to find this click 'Woods' or another mine)  </p>
+	<input type="text" id="unidades_hora" maxlenght="100" placeholder="unidades/hora">
+
+	<p>3. After a week, with the 20% increase, you produce an extra </p>
+	<p id="_x7_x24"></p><p>&lt;units&gt;</p>
+	<button onclick="calcula_unidades_semana()">Calculate resources generated in a week</button>
+
+	<p>3. After a month, with the 20% increase, you produce an extra</p>
+	<p id="_x30_x24"></p><p>&lt;units&gt;</p>
+	<button onclick="calcula_unidades_mes()">Calculate resources generated in a month</button>
+    
+    <p>4. With PPs at this price, is it worth buying PPs to then spend on a 20% increase in mine production that you entered in 2.?</p>
+	<p id="boolean_compensa_sem">&lt;Is it worth it to spend PPs buying a 20% increase in production over a week?&gt;</p>
+    <p id="boolean_compensa_mes">&lt;Is it worth it to spend PPs buying a 20% increase in production over a month?&gt;</p>
+	<button onclick="boolean_compensa()">Is it worth?</button>
+    <br><br><br><br><br><br><br>
+
+</div>   
+    <script>
+	function calcula_unidades_semana(){
+		var un_h=document.getElementById("unidades_hora").value;
+		x7_x24=parseInt(un_h)*7*24;
+    
+		document.getElementById("_x7_x24").innerHTML = x7_x24;
+	}
+
+	function calcula_unidades_mes(){
+		var un_h=document.getElementById("unidades_hora").value;
+		var x30_x24=parseInt(un_h)*30*24;
+    
+		document.getElementById("_x30_x24").innerHTML = x30_x24;
+	}
+    
+    function boolean_compensa(){
+    	var un_h=document.getElementById("unidades_hora").value;
+    	var un_sem=parseInt(un_h)*7*24;
+        var un_mes=parseInt(un_h)*30*24;
+        var preco_do_pp=document.getElementById("preco_pp").value;
+        
+        if ( parseInt(preco_do_pp)*40 < un_sem ){
+        	document.getElementById("boolean_compensa_sem").innerHTML = "Sim. Se comprares 40 PPs do recurso escolhido em 1. 40 PP's vão-te custar " + 40*parseInt(preco_do_pp) + " unidades mas produzes mais " + un_sem + "unidades do recurso escolhido em 2. numa semana. Vais ganhar " + (un_sem-40*parseInt(preco_do_pp)) + " unidades do recurso escolhido em 2. (depois podes trocar por outros recursos no mercado normal :) )";
+        }
+        else{
+            document.getElementById("boolean_compensa_sem").innerHTML = "No. If you buy 40 PPs of the chosen resource in 1. 40 PP's will cost you " + 40*parseInt(preco_do_pp) + " but you will only generate " + un_sem + " extra units of the resource chosen in 2. in a week you will therefore spend " + (40*parseInt(preco_do_pp)-un_sem) + " units of the chosen resource in 2. unnecessarily.";
+            }
+        
+        if ( parseInt(preco_do_pp)*150 < un_mes ){
+        	document.getElementById("boolean_compensa_mes").innerHTML = "Sim. Se comprares 150 PPs do recurso escolhido em 1. 150 PP's vão-te custar " + 150*parseInt(preco_do_pp) + " unidades mas produzes mais " + un_mes + "unidades do recurso escolhido em 2. num mês. Vais ganhar " + (un_mes-150*parseInt(preco_do_pp)) + " unidades do recurso escolhido em 2. (depois podes trocar por outros recursos no mercado normal :) )";
+        }
+        else{
+        	document.getElementById("boolean_compensa_mes").innerHTML = "Não. Se comprares 150 PPs do recurso escolhido em 1. 150 PP's vão-te custar " + 150*parseInt(preco_do_pp) + " unidades mas só produzes mais " + un_mes + "unidades do recurso escolhido em 2. num mês por tanto vais gastar " + (150*parseInt(preco_do_pp)-un_mes) + " unidades do recurso escolhido em 2. desnecessariamente.";
+        }
+    }
+        
+	</script>
+
+<div class="footer">
+  <p>©PONTOGAMING.PT 2021</p>
+</div>  
+</body>
+</html>
