@@ -73,9 +73,9 @@ body {
 <div class="topnav">
   <ul>
   <li><a href="/index_en.html">Home</a></li>
-  <li><a href="/calc20prod_en.html">Calculadora +20% Prod.</a></li>
-  <li><a class="active" href="/all_tools_en.html">Gráficos compra/venda PP's</a></li>
-  <li><a href="/bugs_contact_en.html">Apoio</a></li>
+  <li><a href="/calc20prod_en.html">Calculator +20% Prod.</a></li>
+  <li><a class="active" href="/all_tools_en.html">PPs buying/selling graphs</a></li>
+  <li><a href="/bugs_contact_en.html">Support</a></li>
   <li><a href="/all_tools.html"><img border="0" alt="PT" src="lang_pt.png" width="50" height="30"></a></li>
   <li><a href="/all_tools_en.html"><img border="0" alt="EN" src="lang_en.png" width="50" height="30"></a></li>
   </ul> 
@@ -84,47 +84,46 @@ body {
         <div style="display: table-row;">
             <div style="width: 50%; float: left; margin: 20px; display: table-cell;">
             <div style="width: 550px;">
-            <p>Escolhe um mundo e carrega em 'Escolher mundo' para analisar um mundo específico ou deixa vazio para analisar todos os mundos: </p>
-<input type="text" id="myWorld" maxlenght="99999" placeholder="Exemplo:'74'">
-<button onclick="introduzir_mundo()">Escolher mundo</button>
+            <p>Choose a world and click on 'Choose world' to analyze a specific world or leave empty to analyze all worlds: </p>
+<input type="text" id="myWorld" maxlenght="99999" placeholder="Example:'54'">
+<button onclick="introduzir_mundo()">Choose World</button>
 
-<p>Copia e cola as linhas COMPLETAS do teu historico de pontos</p>
-<input type="text" id="myText" maxlenght="99999" placeholder="Copia aqui uma linha">
-<button onclick="mainFunction()">Introduzir linhas</button><div id="ajuda"><a href="/ajuda.html" style="color:black">Ajuda</a></div>
-<p style="font-weight:bold">Para obteres gráficos mais completos, fala com os membros da tua tribo e pede-lhes o histórico de PPs deles; copia para aqui como se estivesses a copiar várias páginas do teu histórico de pontos.</p>
+<p>Copy and paste the COMPLETE lines of your points history</p>
+<input type="text" id="myText" maxlenght="99999" placeholder="Copy a line here">
+<button onclick="mainFunction()">Insert lines</button><div id="ajuda"><a href="/ajuda_en.html" style="color:black">Help</a></div>
+<p style="font-weight:bold">For more complete graphics, talk to your tribe members and ask them for their PP history; copy here as if you were copying several pages of your point history.</p>
 
-
-<p>Linhas introduzidas:</p>
+<p>Inserted lines::</p>
 <p id="input"></p>
-<p>Total pp's comprados:</p>
+<p>Total PPs purchased:</p>
 <p id="total_pps"></p>
-<p>Total pp's usados:</p>
+<p>Total PPs used:</p>
 <p id="total_pps_usados"></p>
-<p>Total gasto em madeira:</p>
+<p>Total spent on wood:</p>
 <p style="color:brown; font-weight:bold;" id="total_madeira"></p>
-<p >Total gasto em argila:</p>
+<p >Total spent on clay:</p>
 <p style="color:orange; font-weight:bold;" id="total_argila"></p>
-<p>Total gasto em ferro:</p>
+<p>Total spent on iron:</p>
 <p style="color:darkgrey; font-weight:bold;" id="total_ferro"></p>
-<p>Nobres adicionais comprados com PPs:</p>
+<p>Nobles purchased with PPs:</p>
 <p id="num_nobres"></p>
-<p>PPs gastos a comprar nobres:</p>
+<p>PPs spent on buying nobles:</p>
 <p id="pps_gastos_nobres"></p>
 
-<p>PPs gastos a reduzir tempo de construcção:</p>
+<p>PPs spent on reducing time of construction:</p>
 <p id="pps_gastos_tempo_constr"></p>
 
-<p style="font-weight:bold;">Nota: o que são os números no eixo das abcissas?</p>
-<p>Estes números correspondem às data em que os pp's foram comprados.</p>
-<p>Exemplo: 295,222 corresponde à data jun 17, 13:41</p>
-<p>Calculadora de datas</p>
+<p style="font-weight:bold;">Note: what are the numbers on the X axis?</p>
+<p>These numbers are the dates on which the pp's were purchased.</p>
+<p>Example: 295,222 corresponds to the date Jun 17, 13:41</p>
+<p style="font-weight:bold;">Date Calculator</p>
 <input type="text" id="Data_a_calcular" maxlenght="99999" value="295222">
-<button onclick="calculadora_de_datas()">Calcular data (Não usar vírgula nem ponto! )</button>
-<p>Data:</p>
+<button onclick="calculadora_de_datas()">Calculate date (Don't use commas or periods! )</button>
+<p>Date:</p>
 <p id="data">jun 17, 13:41</p>
 <br><br><br><p style="width: 400px; float:center;">"If you know the enemy and know yourself, you need not fear the result of a hundred battles. If you know yourself but not the enemy, for every victory gained you will also suffer a defeat. If you know neither the enemy nor yourself, you will succumb in every battle."</p> - Sun Tzu in The Art of War
 <br><br><br><br><p style="width: 400px; float:center;">"It's unbelievable how much you don't know about the game you have been playing all your life"</p> - Mickey Mantle in Moneyball 
-<br><br><br><br><p style="width: 400px; float:center;">"The old saying is that ‘figures will not lie,’ but a new saying is ‘liars will figure’"</p> - 1889, Carroll D. Wright (a prominent statistician)
+<br><br><br><br><p style="width: 400px; float:center;">"Statistics can be made to prove anything, even the truth"</p> - Anonymous
 <br><br><br><br><p style="width: 400px; float:center;">"The point is, ladies and gentlemen, that greed, for lack of a better word, is good. Greed is right. Greed works. Greed clarifies, cuts through, and captures the essence of the evolutionary spirit. Greed, in all of its forms, greed for life, for money, for love, knowledge, has marked the upward surge in mankind and greed, you mark my words, will not only save Teldar paper, but that other malfunctioning corporation called the USA. Thank you very much."</p> - Gordon Gekko in Wall Street
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
             </div>
