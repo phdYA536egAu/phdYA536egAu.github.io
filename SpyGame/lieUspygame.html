@@ -12,7 +12,10 @@
 <body>
 
 <h1>Welcome to the Spy Game!</h1>
-<p>For any problems contact: help@pontogaming.pt </p>	
+<p>For any problems contact: help@pontogaming.pt </p>
+
+<p><a href="/rules.html">Rules</a></p>
+
 <h4>Choose the number of players</h4>
 <input type="text" id="numPLAYERS" maxlenght="100" value="number of players">
 <h4>Choose the number of spies (max 3)</h4>
@@ -120,7 +123,7 @@ else{
     check=false;
 }
 if (jogador>num_players){
-    document.getElementById("card").innerHTML = "Now set a timer, ask questions and find the spy! Before the timer ends the spy can try to guess the word once. If the spy fails, he can't try anymore and he has lost the game but if he guesses the word correctly, he wins the game. After the timer finnishes all players must vote on who they think the spy is and if they guess correctly, they win, if they don't, the spy wins";
+    document.getElementById("card").innerHTML = "Now set a timer, ask questions and find the spy! After the timer finnishes all players must vote on who they think the spy is.";
 }
 jogador+=1;
 }
