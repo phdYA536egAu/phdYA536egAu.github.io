@@ -1,0 +1,29 @@
+SOURCE:https://www.troyhunt.com/i-now-own-the-coinhive-domain-heres-how-im-fighting-cryptojacking-and-doing-good-things-with-content-security-policies/
+
+Levi Richardson • a month ago
+
+You say in your article:
+
+    not the spammy tracky ones that invade both your privacy
+
+
+but you have 12 trackers on troyhunt.com and you use google analytics on HIBP
+...
+I'm a little confused here
+
+•
+Reply
+•
+Share ›
+
+        −
+    Avatar
+    Troy Hunt Mod Levi Richardson • a month ago
+
+    Let's use the full description:
+
+    "spammy tracky ones that invade both your privacy and your bandwidth"
+
+    This comes back to the very reason I have sponsorship on this blog instead of ads, namely that ads (in the traditional sense) are often bandwidth heavy, have frequently served malicious content (such as cryptominers!) and insist on offering me the same crap I searched for weeks ago on every single site I visit. They also provide me as the site operator with very little benefit, certainly as compared to the sponsorship model. Google Analytics, on the other hand, is very lightweight, hasn't (to the best of my knowledge) served malicious content and whilst it tracks movement across sites, it doesn't feel invasive like ads are. further, it actually provides me with an upside, namely that I can easily derive information such as one of the most common places people are coming to this post from is here: http://www.laspalabras.net/...
+
+    Disqus also has trackers, but same answer again. These services add value and pose little downside, that's not confusing at all 🙂
