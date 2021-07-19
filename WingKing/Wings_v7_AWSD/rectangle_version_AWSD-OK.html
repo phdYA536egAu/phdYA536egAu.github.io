@@ -12,11 +12,25 @@ canvas {
 <body onload="startGame()">
 <script>
 
-var myGamePiece;
+var bird = new Image();
+var bg = new Image();
+var fg = new Image();
+var pipeNorth = new Image();
+var pipeSouth = new Image();
+
+bird.src = "images/nave1.png";
+bg.src = "images/bgMilkyWay_resized600x600.png";
+fg.src = "images/fg2.png";
+pipeNorth.src = "images/square_ast1.png";
+pipeSouth.src = "images/square_ast2.png";
+
+//bird
+bX=10;
+bY=120;
 
 function startGame() {
     myGameArea.start();
-    myGamePiece = new component(30, 30, "red", 10, 120);
+    bird = new component(5, 5, "red", 10, 120);
 }
 
 var myGameArea = {
@@ -27,6 +41,11 @@ var myGameArea = {
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateGameArea, 20);
+
+	this.context.drawImage(bg,0,0);
+	this.context.drawImage(bird,bX,bY);
+
+
         window.addEventListener('keydown', function (e) {
             myGameArea.key = e.keyCode;
         })
@@ -35,11 +54,10 @@ var myGameArea = {
         })
     }, 
     clear : function(){
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 }
 
-function component(width, height, color, x, y) {
+function bird(width, height, color, x, y) {
     this.gamearea = myGameArea;
     this.width = width;
     this.height = height;
@@ -49,25 +67,24 @@ function component(width, height, color, x, y) {
     this.y = y;    
     this.update = function() {
         ctx = myGameArea.context;
-        ctx.fillStyle = color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx = this.context.drawImage(bird,bX,bY);
     }
     this.newPos = function() {
-        this.x += this.speedX;
-        this.y += this.speedY;        
+        this.x = bX; //bad programming probably
+        this.y = bY;        
     }
 }
 
 function updateGameArea() {
     myGameArea.clear();
-    myGamePiece.speedX = 0;
-    myGamePiece.speedY = 0;    
+    bird.speedX = 0;
+    bird.speedY = 0;    
     if (myGameArea.key && myGameArea.key == 79)/*79 eh a letra 'o'*/
-    	{myGamePiece.speedY = -1; }
+    	{bY -= 5; }
     if (myGameArea.key && myGameArea.key == 75)/*75 eh a letra 'k'*/
-    	{myGamePiece.speedY = 1; }
-    myGamePiece.newPos();    
-    myGamePiece.update();
+    	{bY += 5; }
+    bird.newPos();    
+    bird.update();
 }
 </script>
 <p>Make sure this window has focus, then you can use the arrow keys on you keyboard to move the red square.</p>
