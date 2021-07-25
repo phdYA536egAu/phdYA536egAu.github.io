@@ -3,3 +3,5 @@
 o link é o do "here"
 
 encontrado em pontogaming.pt/calc20prod_en.html
+
+----- Está meio corrigido, só falta testar
