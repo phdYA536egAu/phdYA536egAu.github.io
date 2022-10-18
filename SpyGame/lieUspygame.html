@@ -5,9 +5,103 @@
 <style>
 	body {
   		margin: 20;
-  		background-color: #C9D7F8;
+  		background-color: #e1e9fc;
+        font-family: Verdana, sans-serif;
         text-align: center;
 	}
+    h1{
+    	font-family: Hititte Arrow Regular, sans-serif;
+    }
+    p{
+    	font-size: 12px;
+    }
+    #all {
+        width:200px;
+    }
+    .menu1 {
+    	margin:auto;
+        margin-top:20px;
+        margin-bottom:10px;
+    	border-radius: 25px;
+  	border: 2px solid #73AD21;
+  	padding: 20px; 
+ 	width: 250px;
+  	height: 20px;
+        font-size: 14px;
+    }
+    .menu2 {
+    	margin:auto;
+        margin-top:20px;
+        margin-bottom:10px;
+    	border-radius: 25px;
+  	border: 2px solid #73AD21;
+  	padding: 15px; 
+ 	width: 250px;
+  	height: 50px;
+        font-size: 12px;
+    }
+    .textfields {
+    	box-sizing:border-box;
+        padding: 10px;
+  	border:0;
+  	box-shadow:0 0 15px 4px rgba(0,0,0,0.09);
+  	border-radius:10px;
+    }
+    
+    /* container */
+    label {
+      display:block;
+      margin-bottom:4px;
+      position: relative; /* to contain absolute elements */
+      padding-left:30px; /* free space for custom radio button */
+      cursor: pointer;
+    }
+    /* hide default radio button  */
+    label input[type=radio] {
+      position: absolute; /* prevent taking any space */
+      /* cross-browser hidingg */
+      opactiy: 0;
+      width:0; 
+      height:0;
+    }
+    /* custom radio button */
+    label span {
+      position: absolute;
+      /* position to the free space in <label> */
+      top:0;
+      left:40%;
+      width:20px; 
+      height:20px;
+      background-color: #ddd;
+      border-radius: 50%;
+      transition: .3s background-color; /* slight transition */
+    }
+    /* the check icon */
+    label span:after {
+      content: "";
+      position: absolute;
+      display: none;
+
+      /* middle */
+      top:50%;
+      left:50%;
+      transform: translate(-50%,-50%);
+      background-color:#fff;
+      width:8px;
+      height:8px;
+      border-radius:50%;
+    }
+    label:hover span {
+      background-color: #ccc;
+    }
+
+    /**** Here's the trick ***/
+    label input:checked ~ span {
+      background-color: #2eaadc;
+    }
+    label input:checked ~ span:after {
+      display:block;
+    }
 </style>
 </head>
 <body>
@@ -17,36 +111,60 @@
 
 <p><a href="/SpyGame/rules.html">Rules</a></p>
 
-<h4>Choose the number of players</h4>
-<input type="text" id="numPLAYERS" maxlenght="100" value="number of players">
-<h4>Choose the number of spies (max 3)</h4>
-<input type="text" id="numSPIES" maxlenght="100" value="1,2 or 3">
-<h4>(Advanced) Choose if the number of spies is the inserted one or a random number between 1 and the inserted number of spies</h4>
-<p>In the second case, only the spies will know how many spies there are</p>
-<div>
-  <input type="radio" id="option1" name="opt" value="1" checked="checked"> Inserted number of spies
-  <input type="radio" id="option2" name="opt" value="2" > Random number of spies
-</div>
+<div id=""all>
+    <h4 class="menu1">Choose the number of players</h4>
+    
+    <input type="text" class="textfields" id="numPLAYERS" maxlenght="100" value="number of players">
+    
+    <h4 class="menu1">Choose the number of spies (max 3)</h4>
+    
+    <input type="text" class="textfields" id="numSPIES" maxlenght="100" value="1,2 or 3">
+    
+    <h4 class="menu2">(Advanced) Choose whether the number of spies is the inserted one or a random number between 1 and the inserted number of spies</h4>
+    <p>In the second case, only the spies will know how many spies there are</p>
+    <div>
+        <label>Inserted number of spies
+            <input type="radio" id="option1" name="opt" value="1" checked="checked"/>
+            <span></span>
+        </label>
+        <label>Random number of spies
+            <input type="radio" id="option2" name="opt" value="2" />
+            <span></span>
+        </label>
+    </div>
 
-<h4>Chose your dictionary</h4>
-<div>
-  <input type="radio" id="r1" name="rate" value="575 english words" checked="checked"> 575 english words
-  <input type="radio" id="r2" name="rate" value="677 palavras em portugues" > 682 palavras em português 
-  <input type="radio" id="r3" name="rate" value="310 insultos portugueses" checked="checked"> 309 insultos em português
-  <input type="radio" id="r4" name="rate" value="158 cidades portuguesas" checked="checked"> 158 cidades portuguesas
-</div>
+    <h4 class="menu1">Chose your dictionary</h4>
+    <div>
+    <label> 575 english words
+    	<input type="radio" id="r1" name="rate" value="575 english words" checked="checked">
+    	<span></span>
+    </label>
+    <label> 682 palavras em português
+    	<input type="radio" id="r2" name="rate" value="677 palavras em portugues">
+    	<span></span>
+    </label>
+    <label> 309 insultos em português
+    	<input type="radio" id="r3" name="rate" value="310 insultos portugueses">
+    	<span></span>
+    </label>
+    <label> 158 cidades portuguesas
+    	<input type="radio" id="r4" name="rate" value="158 cidades portuguesas">
+    	<span></span>
+    </label>
+    </div>
 
 
-<p id="nota1">Note: you have to press play after inserting the number of players and before clicking show card.</p>
-<p id="nota2">Nota: tens de carregar no play depois de introduzir o numero de jogadores e antes de carregar em show card.</p>
+    <p id="nota1">Note: you have to press play after inserting the number of players and before clicking show card.</p>
+    <p id="nota2">Nota: tens de carregar no play depois de introduzir o numero de jogadores e antes de carregar em show card.</p>
 
-<div style="background-color: #386CE5;">
-<!-- LiveConsole: Para testar erros -->
-<p id="LiveConsole"></p>
-<button onclick="play()">START GAME</button>
-<p id="card"></p>
-<button onclick="show_card()">show card</button>
-<button onclick="hide_card()">hide card</button>
+    <div style="background-color: #386CE5;">
+    <!-- LiveConsole: Para testar erros -->
+    <p id="LiveConsole"></p>
+    <button onclick="play()">START GAME</button>
+    <p id="card"></p>
+    <button onclick="show_card()">show card</button>
+    <button onclick="hide_card()">hide card</button>
+    </div>
 </div>
 
 <script>
