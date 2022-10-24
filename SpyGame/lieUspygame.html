@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 <title>LieU Spy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"> 
 <style>
 	body {
   		margin: 20;
@@ -10,7 +15,7 @@
         text-align: center;
 	}
     h1{
-    	font-family: Hititte Arrow Regular, sans-serif;
+    	font-family: Rubik, sans-serif;
     }
     p{
     	font-size: 12px;
@@ -25,7 +30,7 @@
     	border-radius: 25px;
   	border: 2px solid #73AD21;
   	padding: 20px; 
- 	width: 250px;
+ 	width: 290px;
   	height: 20px;
         font-size: 14px;
     }
@@ -69,10 +74,10 @@
       position: absolute;
       /* position to the free space in <label> */
       top:0;
-      left:40%;
+      left: calc(50% - 130px);
       width:20px; 
       height:20px;
-      background-color: #ddd;
+      background-color: #bbb;
       border-radius: 50%;
       transition: .3s background-color; /* slight transition */
     }
@@ -102,6 +107,41 @@
     label input:checked ~ span:after {
       display:block;
     }
+    
+    #card {
+    	margin:auto;
+        margin-top:20px;
+        margin-bottom:10px;
+    	border-radius: 10px;
+  		border: 2px solid #aaa;
+  		padding: 15px; 
+ 		width: 150px;
+  		height: 200px;
+        font-size: 16px;
+        font-family: 'Nunito', sans-serif;
+        background-color: #eee;
+    }
+    .button{
+    	margin-top:20px;
+        border-radius: 5px; 
+		text-transform: uppercase;
+        font-weight: bold;
+        
+    }
+    
+    .play_button{
+    	color: #fff;
+    	border: 1px solid #000;
+    	background-color: #73AD21;
+    	font-size:22px;
+    }
+    
+    .card_button{
+    	color: #000;
+    	border: 2px solid #fff;
+    	background-color: #bbb;
+    	font-size:18px;
+    }
 </style>
 </head>
 <body>
@@ -114,11 +154,11 @@
 <div id=""all>
     <h4 class="menu1">Choose the number of players</h4>
     
-    <input type="text" class="textfields" id="numPLAYERS" maxlenght="100" value="number of players">
+    <input type="text" class="textfields" id="numPLAYERS" maxlenght="100" placeholder="number of players">
     
     <h4 class="menu1">Choose the number of spies (max 3)</h4>
     
-    <input type="text" class="textfields" id="numSPIES" maxlenght="100" value="1,2 or 3">
+    <input type="text" class="textfields" id="numSPIES" maxlenght="100" placeholder="1,2 or 3">
     
     <h4 class="menu2">(Advanced) Choose whether the number of spies is the inserted one or a random number between 1 and the inserted number of spies</h4>
     <p>In the second case, only the spies will know how many spies there are</p>
@@ -157,13 +197,11 @@
     <p id="nota1">Note: you have to press play after inserting the number of players and before clicking show card.</p>
     <p id="nota2">Nota: tens de carregar no play depois de introduzir o numero de jogadores e antes de carregar em show card.</p>
 
-    <div style="background-color: #386CE5;">
-    <!-- LiveConsole: Para testar erros -->
-    <p id="LiveConsole"></p>
-    <button onclick="play()">START GAME</button>
-    <p id="card"></p>
-    <button onclick="show_card()">show card</button>
-    <button onclick="hide_card()">hide card</button>
+    <div style="background-color: #386CE5; height:500px;">
+    <button class="button play_button" onclick="play()">PLAY</button>
+    <p id="card">Click Play!</p>
+    <button class="button card_button" onclick="show_card()">show card</button>
+    <button class="button card_button" onclick="hide_card()">hide card</button>
     </div>
 </div>
 
