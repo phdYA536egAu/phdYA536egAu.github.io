@@ -173,7 +173,7 @@
         </label>
     </div>
 
-    <h4 class="menu1">Chose your dictionary</h4>
+    <h4 class="menu1">Choose your dictionary</h4>
     <div>
     <label> 575 english words
     	<input type="radio" id="r1" name="rate" value="575 english words" checked="checked">
@@ -193,12 +193,9 @@
     </label>
     </div>
 
-
-    <p id="nota1">Note: you have to press play after inserting the number of players and before clicking show card.</p>
-    <p id="nota2">Nota: tens de carregar no play depois de introduzir o numero de jogadores e antes de carregar em show card.</p>
-
     <div style="background-color: #386CE5; height:500px;">
     <button class="button play_button" onclick="play()">PLAY</button>
+    <p id="instructions">Insert the number of players and spies, then click play.</p>
     <p id="card">Click Play!</p>
     <button class="button card_button" onclick="show_card()">show card</button>
     <button class="button card_button" onclick="hide_card()">hide card</button>
@@ -213,18 +210,18 @@ function play(){
   num_players = document.getElementById("numPLAYERS").value;
   num_spies = document.getElementById("numSPIES").value;
   
-  if ( num_players == "number of players" ){
-  	document.getElementById("card").innerHTML = "Choose number of players!";
+  if ( (parseInt(num_players) > 2) != 1 ){
+  	document.getElementById("instructions").innerHTML = "Choose a valid number of players.";
     return;
   }
   
-  if ( num_spies == "1,2 or 3" ){
-  	document.getElementById("card").innerHTML = "Choose number of spies!";
+  if ( (parseInt(num_spies) > 0 && parseInt(num_spies) < 4) != 1 ){
+  	document.getElementById("instructions").innerHTML = "Choose a valid number of spies.";
     return;
   }
-  
-  document.getElementById("nota1").innerHTML = " ";
-  document.getElementById("nota2").innerHTML = " ";
+  else{
+  	document.getElementById("instructions").innerHTML = "The game is about to start, follow the instructions below."
+  }
   
   if (document.getElementById('option1').checked) {
   	num_spies=num_spies;
@@ -234,7 +231,10 @@ function play(){
   }
   
   carta=obter_carta();
-  show_cards();
+  if ( carta != "card_error" ){
+  	show_cards();
+  }
+  return;
 }
 
 function show_cards(){
@@ -274,7 +274,7 @@ function obter_carta(){
     else if(document.getElementById('r4').checked){
       		return dicionario_cidades_PT(Math.floor(Math.random() * 158));
         }
-    //return "Error: word not found. Please reload this website"
+    return "0"
 }
 
 function dicionario_575words_ENG(num_da_palavra){
