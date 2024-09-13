@@ -16,6 +16,9 @@ a {
 }
 
 #portfolio {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
 	margin: auto;
   	width: 50%;
 }
@@ -23,7 +26,6 @@ a {
 
 .hero {
 	background-image: radial-gradient(50% 176%, #253854 80%, #061922 100%);
-	// min-height: 100vh;
 	min-height: 6rem;
 	position: relative;
 	overflow: hidden;
